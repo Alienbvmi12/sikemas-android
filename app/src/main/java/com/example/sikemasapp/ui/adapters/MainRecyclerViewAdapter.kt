@@ -34,20 +34,14 @@ class MainRecyclerViewAdapter(private val dataset: List<MainItem>, private val c
         holder.text.text = item.text
         holder.icon.setImageResource(item.icon)
         if(position + 1 !== 1){
-//            if((position + 1) % 2 === 0){
             if(sepCount <= 2 && sepCount > 0) {
                 holder.view.background = ContextCompat.getDrawable(context, R.drawable.main_item_shape_2)
                 if(sepCount === 2) sepCount = 0
             }
             Log.d("Sepcount", "sepCount = $sepCount")
-            if(sepCount > 0){
-                sepCount++
-            }
-            else {
-                sepCount--
-            }
+            if(sepCount > 0) sepCount++
+            else sepCount--
             if(sepCount === -3) sepCount = 1
-//            }
         }
         holder.view.setOnClickListener{
             val intent = Intent(context, item.clas)
