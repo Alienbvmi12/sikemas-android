@@ -2,11 +2,10 @@ package com.example.sikemasapp.ui.view.telepon_darurat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.sikemasapp.R
-import com.example.sikemasapp.data.viewModel.alarmDarurat.TeleponDaruratViewModel
-import com.example.sikemasapp.data.viewModel.alarmDarurat.TeleponDaruratViewModelFactory
+import com.example.sikemasapp.data.viewModel.teleponDarurat.TeleponDaruratViewModel
+import com.example.sikemasapp.data.viewModel.teleponDarurat.TeleponDaruratViewModelFactory
 import com.example.sikemasapp.databinding.FragmentTeleponDaruratBinding
 import com.example.sikemasapp.ui.adapters.TelpDaruratRecyclerViewAdapter
 

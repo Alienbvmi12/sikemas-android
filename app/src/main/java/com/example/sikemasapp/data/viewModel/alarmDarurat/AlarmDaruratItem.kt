@@ -1,7 +1,6 @@
 package com.example.sikemasapp.data.viewModel.alarmDarurat
 
-data class TeleponDaruratItem(
+data class AlarmDaruratItem(
     var text: String,
-    var icon: Int,
-    var number: String
+    var icon: Int
 )

@@ -1,12 +1,7 @@
-package com.example.sikemasapp.data.viewModel.alarmDarurat
+package com.example.sikemasapp.data.viewModel.teleponDarurat
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Bundle
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
-import com.example.sikemasapp.MainActivity
 import com.example.sikemasapp.R
 
 class TeleponDaruratViewModel(private val context: Context): ViewModel() {

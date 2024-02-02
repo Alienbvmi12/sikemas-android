@@ -1,10 +1,8 @@
-package com.example.sikemasapp.data.viewModel.alarmDarurat
+package com.example.sikemasapp.data.viewModel.teleponDarurat
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.sikemasapp.data.model.login.LoginDataSource
-import com.example.sikemasapp.data.model.login.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

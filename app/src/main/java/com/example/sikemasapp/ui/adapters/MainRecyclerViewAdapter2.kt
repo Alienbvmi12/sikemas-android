@@ -1,8 +1,6 @@
 package com.example.sikemasapp.ui.adapters
 
 import android.content.Context
-import android.content.Intent
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sikemasapp.R
-import com.example.sikemasapp.data.viewModel.main.MainItem
+import com.example.sikemasapp.data.viewModel.main.MainItem2
 
-class MainRecyclerViewAdapter(private val dataset: List<MainItem>, private val context: Context): RecyclerView.Adapter<MainRecyclerViewAdapter.MainRecyclerViewHolder>() {
+class MainRecyclerViewAdapter2(private val dataset: List<MainItem2>, private val context: Context, private val navigate: (n: Int) -> Any): RecyclerView.Adapter<MainRecyclerViewAdapter2.MainRecyclerViewHolder>() {
     private var sepCount = 1
 
     class MainRecyclerViewHolder(val view: View): RecyclerView.ViewHolder(view){
@@ -43,8 +40,7 @@ class MainRecyclerViewAdapter(private val dataset: List<MainItem>, private val c
             if(sepCount === -3) sepCount = 1
         }
         holder.view.setOnClickListener{
-            val intent = Intent(context, item.clas)
-            startActivity(context, intent, Bundle())
+            navigate(item.clas)
         }
     }
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/mainPageFragment">
+    <fragment
+        android:id="@+id/mainPageFragment"
+        android:name="com.example.sikemasapp.ui.view._Main.MainPageFragment"
+        android:label="MainPageFragment" >
+        <action
+            android:id="@+id/action_mainPageFragment_to_rondaFragment"
+            app:destination="@id/rondaFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_teleponDaruratFragment"
+            app:destination="@id/teleponDaruratFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_alarmDaruratFragment"
+            app:destination="@id/alarmDaruratFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_kontakPengaduanFragment"
+            app:destination="@id/kontakPengaduanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/alarmDaruratFragment"
+        android:name="com.example.sikemasapp.ui.view.alarm.AlarmDaruratFragment"
+        android:label="AlarmDaruratFragment" />
+    <fragment
+        android:id="@+id/kontakPengaduanFragment"
+        android:name="com.example.sikemasapp.ui.view.kontak_pengaduan.KontakPengaduanFragment"
+        android:label="KontakPengaduanFragment" />
+    <fragment
+        android:id="@+id/rondaFragment"
+        android:name="com.example.sikemasapp.ui.view.ronda.RondaFragment"
+        android:label="RondaFragment" />
+    <fragment
+        android:id="@+id/teleponDaruratFragment"
+        android:name="com.example.sikemasapp.ui.view.telepon_darurat.TeleponDaruratFragment"
+        android:label="TeleponDaruratFragment" />
+</navigation>

@@ -1,5 +1,6 @@
 package com.example.sikemasapp.ui.view.login
 
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.annotation.StringRes
@@ -12,10 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import com.example.sikemasapp.MainActivity2
 import com.example.sikemasapp.R
 import com.example.sikemasapp.data.viewModel.login.LoginViewModel
 import com.example.sikemasapp.data.viewModel.login.LoginViewModelFactory
 import com.example.sikemasapp.databinding.FragmentLoginBinding
+import com.google.android.material.textfield.TextInputEditText
 
 class LoginFragment : Fragment() {
 
@@ -42,8 +45,8 @@ class LoginFragment : Fragment() {
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
-        val usernameEditText = binding.username
-        val passwordEditText = binding.password
+        val usernameEditText: TextInputEditText = binding.username
+        val passwordEditText: TextInputEditText = binding.password
         val loginButton = binding.login
         val loadingProgressBar = binding.loading
 
@@ -70,6 +73,7 @@ class LoginFragment : Fragment() {
                 }
                 loginResult.success?.let {
                     updateUiWithUser(it)
+                    startActivity(Intent(requireContext(), MainActivity2::class.java))
                 }
             })
 
