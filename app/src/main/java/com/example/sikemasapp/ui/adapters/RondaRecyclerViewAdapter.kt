@@ -29,7 +29,7 @@ class RondaRecyclerViewAdapter(private val dataset: List<RondaItem>, private val
         holder.dayName.text = item.dayName
         holder.view.setOnClickListener{
             val dayIndex = item.dayIndex
-            val bottomSheetFragment = MemberListBottomSheet(viewModel)
+            val bottomSheetFragment = MemberListBottomSheet(viewModel, item.dayName)
             bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
         }
     }

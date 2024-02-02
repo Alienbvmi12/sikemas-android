@@ -1,6 +1,7 @@
 package com.example.sikemasapp.ui.adapters
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -38,7 +39,7 @@ class RondaDetailAdapter():
         }
 
         override fun areContentsTheSame(oldItem: MemberItem, newItem: MemberItem): Boolean {
-            return oldItem.name + oldItem.id.toString() == newItem.name + newItem.id.toString()
+            return oldItem == newItem
         }
     }
 
@@ -59,6 +60,7 @@ class RondaDetailAdapter():
      */
     override fun onBindViewHolder(holder: RondaDetailViewHolder, position: Int) {
         val member = getItem(position)
+        Log.e(member.id.toString(), member.name)
         holder.bind(member)
     }
 }

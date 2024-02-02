@@ -6,11 +6,11 @@ import com.example.sikemasapp.R
 
 class TeleponDaruratViewModel(private val context: Context): ViewModel() {
     val itemList: List<TeleponDaruratItem> = listOf<TeleponDaruratItem>(
-        TeleponDaruratItem("Nomor Darurat (umum)", R.drawable.alarm_clock_1, context.getString(R.string.no_darurat)),
-        TeleponDaruratItem("Pemadam Kebakaran", R.drawable.alarm_clock_1, context.getString(R.string.no_damkar)),
-        TeleponDaruratItem("Ambulan", R.drawable.alarm_clock_1, context.getString(R.string.no_ambulan)),
-        TeleponDaruratItem("Polisi", R.drawable.alarm_clock_1, context.getString(R.string.no_polisi)),
-        TeleponDaruratItem("Tim SAR", R.drawable.alarm_clock_1, context.getString(R.string.no_sar))
+        TeleponDaruratItem("Nomor Darurat (umum)", R.drawable.alert_128, context.getString(R.string.no_darurat)),
+        TeleponDaruratItem("Pemadam Kebakaran", R.drawable.firefighter_pngrepo_com, context.getString(R.string.no_damkar)),
+        TeleponDaruratItem("Ambulan", R.drawable.nurse_pngrepo_com, context.getString(R.string.no_ambulan)),
+        TeleponDaruratItem("Polisi", R.drawable.policeman_pngrepo_com, context.getString(R.string.no_polisi)),
+        TeleponDaruratItem("Tim SAR", R.drawable.sar, context.getString(R.string.no_sar))
         )
 //    private fun openPhone(number: String){
 //        val dialIntent = Intent(Intent.ACTION_DIAL)

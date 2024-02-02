@@ -6,9 +6,9 @@ import com.example.sikemasapp.R
 
 class AlarmDaruratViewModel(): ViewModel() {
     val itemList: List<AlarmDaruratItem> = listOf<AlarmDaruratItem>(
-            AlarmDaruratItem("Pencurian", R.drawable.alarm_clock_1),
-            AlarmDaruratItem("Kebakaran", R.drawable.alarm_clock_1),
-            AlarmDaruratItem("Darurat!! Berkumpul", R.drawable.alarm_clock_1),
+            AlarmDaruratItem("Pencurian", R.drawable.thief_1),
+            AlarmDaruratItem("Kebakaran", R.drawable.fire_1),
+            AlarmDaruratItem("Darurat!! Berkumpul", R.drawable.emergency_2),
         )
 //    private fun openPhone(number: String){
 //        val dialIntent = Intent(Intent.ACTION_DIAL)

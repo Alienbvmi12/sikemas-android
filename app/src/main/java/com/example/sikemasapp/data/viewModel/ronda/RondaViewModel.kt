@@ -1,6 +1,8 @@
 package com.example.sikemasapp.data.viewModel.ronda
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.sikemasapp.R
 
@@ -15,12 +17,12 @@ class RondaViewModel(): ViewModel() {
         RondaItem("Minggu", 0)
     )
 
-    var memberList: List<MemberItem> = listOf<MemberItem>(
+    var memberList: LiveData<List<MemberItem>> = MutableLiveData(listOf<MemberItem>(
         MemberItem(1, "Wiranto"),
         MemberItem(2, "Agus"),
         MemberItem(3, "Saepul"),
         MemberItem(4, "Roger"),
         MemberItem(5, "Yamaguchi")
-    )
+    ))
 
 }
