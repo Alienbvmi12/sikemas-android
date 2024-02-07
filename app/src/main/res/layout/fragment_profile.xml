@@ -20,6 +20,7 @@
             android:layout_height="180dp">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_margin="20dp"
@@ -36,6 +37,19 @@
                     android:layout_height="match_parent"
                     app:srcCompat="@drawable/_icon__profile_circle_icon_" />
             </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/logoutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="95dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/cardView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/exit" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView

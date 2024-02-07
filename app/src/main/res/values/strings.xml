@@ -17,4 +17,5 @@
     <string name="no_ambulan">118</string>
     <string name="no_polisi">110</string>
     <string name="no_sar">115</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

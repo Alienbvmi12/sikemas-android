@@ -12,7 +12,8 @@ import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmDaruratItem
 
 class AlarmDaruratRecyclerViewAdapter(
     private val dataset: List<AlarmDaruratItem>,
-    private val context: Context
+    private val context: Context,
+    private val showLocation: () -> Any
 ):
     RecyclerView.Adapter<AlarmDaruratRecyclerViewAdapter.AlarmDaruratViewHolder>() {
 
@@ -30,6 +31,9 @@ class AlarmDaruratRecyclerViewAdapter(
         val item = dataset[position]
         holder.text.text = item.text
         holder.icon.setImageResource(item.icon)
+        holder.view.setOnClickListener{
+            showLocation()
+        }
     }
 
     override fun getItemCount(): Int {

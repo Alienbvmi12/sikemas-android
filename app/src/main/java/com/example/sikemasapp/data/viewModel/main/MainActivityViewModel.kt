@@ -2,7 +2,6 @@ package com.example.sikemasapp.data.viewModel.main
 
 import androidx.lifecycle.ViewModel
 import com.example.sikemasapp.R
-import com.example.sikemasapp.ui.view.telepon_darurat.TeleponDaruratActivity
 
 class MainActivityViewModel: ViewModel() {
 

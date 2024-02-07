@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.viewpager2.widget.ViewPager2
 import com.example.sikemasapp.MainActivity2
 import com.example.sikemasapp.R
 import com.example.sikemasapp.data.viewModel.login.LoginViewModel
@@ -20,7 +21,7 @@ import com.example.sikemasapp.data.viewModel.login.LoginViewModelFactory
 import com.example.sikemasapp.databinding.FragmentLoginBinding
 import com.google.android.material.textfield.TextInputEditText
 
-class LoginFragment : Fragment() {
+class LoginFragment(private val viewPager: ViewPager2) : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
     private var _binding: FragmentLoginBinding? = null
@@ -42,13 +43,18 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(requireContext()))
             .get(LoginViewModel::class.java)
 
         val usernameEditText: TextInputEditText = binding.username
         val passwordEditText: TextInputEditText = binding.password
         val loginButton = binding.login
         val loadingProgressBar = binding.loading
+        val navToRegister = binding.registerLogin
+
+        navToRegister.setOnClickListener {
+            viewPager.setCurrentItem(1, true)
+        }
 
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
@@ -112,6 +118,12 @@ class LoginFragment : Fragment() {
                 passwordEditText.text.toString()
             )
         }
+        loginViewModel.loginDataChanged(
+            usernameEditText.text.toString(),
+            passwordEditText.text.toString()
+        )
+
+        loginViewModel.isLoggedIn()
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
