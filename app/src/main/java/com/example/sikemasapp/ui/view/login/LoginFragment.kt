@@ -19,6 +19,7 @@ import com.example.sikemasapp.R
 import com.example.sikemasapp.data.viewModel.login.LoginViewModel
 import com.example.sikemasapp.data.viewModel.login.LoginViewModelFactory
 import com.example.sikemasapp.databinding.FragmentLoginBinding
+import com.example.sikemasapp.ui.view.forgot_password.ForgotPasswordActivity
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginFragment(private val viewPager: ViewPager2) : Fragment() {
@@ -82,6 +83,10 @@ class LoginFragment(private val viewPager: ViewPager2) : Fragment() {
                     startActivity(Intent(requireContext(), MainActivity2::class.java))
                 }
             })
+
+        binding.lupaPassword.setOnClickListener {
+            startActivity(Intent(requireContext(), ForgotPasswordActivity::class.java))
+        }
 
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

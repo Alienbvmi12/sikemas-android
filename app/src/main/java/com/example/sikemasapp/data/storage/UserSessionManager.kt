@@ -16,10 +16,11 @@ class UserSessionManager(context: Context) {
     }
 
     // Save other login info as needed
-    fun saveLoginInfo(id: String, username: String,) {
+    fun saveLoginInfo(id: String, username: String, email: String) {
         sharedPreferences.edit()
             .putString("username", username)
             .putString("id", id)
+            .putString("email", email)
             .apply()
     }
 
@@ -31,8 +32,9 @@ class UserSessionManager(context: Context) {
     // Retrieve other login info
     fun getLoginInfo(): Map<String, *> {
         val username = sharedPreferences.getString("username", null)
-        val email = sharedPreferences.getString("id", null)
-        return mapOf("username" to username, "id" to email)
+        val email = sharedPreferences.getString("email", null)
+        val id = sharedPreferences.getString("id", null)
+        return mapOf("username" to username, "email" to email, "id" to id)
     }
 
     fun isLoginInfoExist(): Boolean {

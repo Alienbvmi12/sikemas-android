@@ -5,7 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
+import androidx.lifecycle.viewModelScope
 import com.example.sikemasapp.R
+import com.example.sikemasapp.data.model.http.HttpApi
+import com.example.sikemasapp.data.model.http.HttpApiService
 import com.example.sikemasapp.data.model.login.LoggedInUser
 import com.example.sikemasapp.data.model.login.LoginRepository
 import com.example.sikemasapp.data.model.login.Result
@@ -13,6 +16,7 @@ import com.example.sikemasapp.data.storage.UserSessionManager
 import com.example.sikemasapp.ui.view.login.LoggedInUserView
 import com.example.sikemasapp.ui.view.login.LoginFormState
 import com.example.sikemasapp.ui.view.login.LoginResult
+import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
@@ -28,21 +32,26 @@ class LoginViewModel(
     private val userSessionManager: UserSessionManager = UserSessionManager(context)
 
     fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
+        viewModelScope.launch {
+            // can be launched in a separate asynchronous job
+            val result = HttpApi.retrofitService.login(mapOf(
+                "username" to username,
+                "password" to password
+            ))
 
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-            userSessionManager.saveLoginInfo(result.data.userId, result.data.displayName)
-            userSessionManager.saveToken("fwuie213e3e32")
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
+            if (result.isSuccessful) {
+                _loginResult.value =
+                    LoginResult(success = LoggedInUserView(displayName = result.body()!!.data["username"].toString()))
+                userSessionManager.saveLoginInfo(
+                    result.body()!!.data["id"].toString(),
+                    result.body()!!.data["username"].toString(),
+                    result.body()!!.data["email"].toString()
+                )
+                userSessionManager.saveToken(result.body()!!.data["token"].toString())
+            } else {
+                _loginResult.value = LoginResult(error = R.string.login_failed)
+            }
         }
-    }
-
-    fun logout(){
-        userSessionManager.clearSession()
     }
 
     fun isLoggedIn(): Boolean {
@@ -50,8 +59,10 @@ class LoginViewModel(
             val user = userSessionManager.getLoginInfo()
             val userId = user.getValue("id").toString()
             val username = user.getValue("username").toString()
+            val email = user.getValue("email").toString()
+            val token = userSessionManager.getToken().toString()
 
-            loginRepository.setLoggedInUser(LoggedInUser(userId, username))
+            loginRepository.setLoggedInUser(LoggedInUser(userId, username, email, token))
             _loginResult.value = LoginResult(success = LoggedInUserView(displayName = username))
 
             true

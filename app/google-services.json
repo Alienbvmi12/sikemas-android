@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "426897284702",
+    "project_id": "sikemasapp",
+    "storage_bucket": "sikemasapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426897284702:android:dbc4e6b67be95f24605ecf",
+        "android_client_info": {
+          "package_name": "com.example.sikemasapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAZuZRHtw5JaD6UHNWhxn-dEGyc_PJiCk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

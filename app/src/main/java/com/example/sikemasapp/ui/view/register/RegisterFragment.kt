@@ -18,13 +18,16 @@ import com.example.sikemasapp.MainActivity2
 import com.example.sikemasapp.R
 import com.example.sikemasapp.data.viewModel.login.LoginViewModel
 import com.example.sikemasapp.data.viewModel.login.LoginViewModelFactory
+import com.example.sikemasapp.data.viewModel.register.RegisterViewModel
+import com.example.sikemasapp.data.viewModel.register.RegisterViewModelFactory
 import com.example.sikemasapp.databinding.FragmentLoginBinding
 import com.example.sikemasapp.databinding.FragmentRegisterBinding
+import com.example.sikemasapp.ui.view.login.LoggedInUserView
 import com.google.android.material.textfield.TextInputEditText
 
 class RegisterFragment(private val viewPager: ViewPager2) : Fragment() {
 
-    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var viewModel: RegisterViewModel
     private var _binding: FragmentRegisterBinding? = null
 
     // This property is only valid between onCreateView and
@@ -44,14 +47,44 @@ class RegisterFragment(private val viewPager: ViewPager2) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-//            .get(LoginViewModel::class.java)
+        viewModel = ViewModelProvider(this, RegisterViewModelFactory(requireContext()))
+            .get(RegisterViewModel::class.java)
         val navToLogin = binding.loginRegister
+        val registerButton = binding.register
+        val loadingProgressBar = binding.loading
 
         navToLogin.setOnClickListener {
             viewPager.setCurrentItem(0, true)
         }
 
+        viewModel.registerResult.observe(viewLifecycleOwner,
+            Observer { loginResult ->
+                loginResult ?: return@Observer
+                loadingProgressBar.visibility = View.GONE
+                loginResult.error?.let {
+                    showLoginFailed(it)
+                }
+                loginResult.success?.let {
+                    startActivity(Intent(requireContext(), EmailVerificationActivity::class.java))
+                }
+            })
+
+        registerButton.setOnClickListener {
+            loadingProgressBar.visibility = View.VISIBLE
+            viewModel.register(
+                binding.insertNik.text.toString(),
+                binding.insertEmail.text.toString(),
+                binding.insertUsername.text.toString(),
+                binding.insertPassword.text.toString(),
+                binding.insertConfirmPassword.text.toString()
+            )
+        }
+
+    }
+
+    private fun showLoginFailed(errorString: String) {
+        val appContext = context?.applicationContext ?: return
+        Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
     }
 
 }

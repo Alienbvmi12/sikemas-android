@@ -1,9 +1,13 @@
 package com.example.sikemasapp.data.viewModel.main
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.sikemasapp.R
+import com.example.sikemasapp.data.storage.UserSessionManager
 
-class MainActivityViewModel: ViewModel() {
+class MainActivityViewModel(context: Context): ViewModel() {
+    val userSessionManager: UserSessionManager = UserSessionManager(context)
+    val userData = userSessionManager.getLoginInfo()
 
     val itemList2: List<MainItem2> = listOf<MainItem2>(
         MainItem2("Alarm Darurat", R.drawable.alarm_clock_1, R.id.alarmDaruratFragment),

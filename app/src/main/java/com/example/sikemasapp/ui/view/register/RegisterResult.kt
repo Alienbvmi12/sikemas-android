@@ -3,7 +3,7 @@ package com.example.sikemasapp.ui.view.register
 /**
  * Authentication result : success (user details) or error message.
  */
-data class LoginResult(
+data class RegisterResult(
     val success: LoggedInUserView? = null,
-    val error: Int? = null
+    val error: String? = null
 )

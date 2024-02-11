@@ -6,11 +6,15 @@ import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sikemasapp.data.storage.RegisterSessionManager
+import com.example.sikemasapp.data.storage.RegisterSessionManager.Companion.EMAIL_VERIFICATION_PHASE
+import com.example.sikemasapp.ui.view.register.EmailVerificationActivity
 
 @Suppress("DEPRECATION")
 class LoadingScreenActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val registerSessionManager = RegisterSessionManager(this)
         setContentView(R.layout.activity_loading_screen)
 
         window.setFlags(
@@ -19,7 +23,13 @@ class LoadingScreenActivity: AppCompatActivity() {
         )
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, AuthActivity::class.java)
+            var intent: Intent
+            if(registerSessionManager.getPhaseInfo() === EMAIL_VERIFICATION_PHASE){
+                intent = Intent(this, EmailVerificationActivity::class.java)
+            }
+            else{
+                intent = Intent(this, AuthActivity::class.java)
+            }
             startActivity(intent)
             finish()
         }, 2000)
