@@ -97,6 +97,7 @@ class MainActivity2 : AppCompatActivity() {
 
         profileInfoView.findViewById<ImageView>(R.id.profileImageView).setImageResource(R.drawable.nurse_pngrepo_com)
         profileInfoView.findViewById<TextView>(R.id.usernameTextView).text = viewModel.userData.getValue("username").toString()
+        profileInfoView.findViewById<TextView>(R.id.roleTextView).text = viewModel.userData.getValue("email").toString()
 
         slidingPaneLayout.setPanelSlideListener(object : SlidingPaneLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View, slideOffset: Float) {

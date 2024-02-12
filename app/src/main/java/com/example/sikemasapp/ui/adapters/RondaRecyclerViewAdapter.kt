@@ -5,14 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sikemasapp.R
 import com.example.sikemasapp.data.viewModel.ronda.RondaItem
 import com.example.sikemasapp.data.viewModel.ronda.RondaViewModel
 import com.example.sikemasapp.ui.view.ronda.MemberListBottomSheet
 
-class RondaRecyclerViewAdapter(private val dataset: List<RondaItem>, private val fragmentManager: FragmentManager, private val viewModel: RondaViewModel): RecyclerView.Adapter<RondaRecyclerViewAdapter.RondaViewHolder>() {
+class RondaRecyclerViewAdapter(
+    private val dataset: List<RondaItem>,
+    private val fragmentManager: FragmentManager,
+    private val viewModel: RondaViewModel,
+    private val lifecycleOwner: LifecycleOwner,
+    private val context: Context
+): RecyclerView.Adapter<RondaRecyclerViewAdapter.RondaViewHolder>() {
     private var sepCount = 1
 
     class RondaViewHolder(val view: View): RecyclerView.ViewHolder(view){
@@ -29,13 +38,30 @@ class RondaRecyclerViewAdapter(private val dataset: List<RondaItem>, private val
         holder.dayName.text = item.dayName
         holder.view.setOnClickListener{
             val dayIndex = item.dayIndex
-            val bottomSheetFragment = MemberListBottomSheet(viewModel, item.dayName)
-            bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
+//            viewModel.rondaRes.observe(lifecycleOwner,
+//                Observer { rondaResult ->
+//                    rondaResult ?: return@Observer
+//                    rondaResult.error?.let {
+//                        toast(it)
+//                    }
+//                    rondaResult.success?.let {
+//
+//                    }
+//                }
+//            )
+            viewModel.getJadwalRonda(dayIndex.toString()){
+                val bottomSheetFragment = MemberListBottomSheet(viewModel, item.dayName)
+                bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
+            }
         }
     }
 
     override fun getItemCount(): Int {
         return dataset.size
+    }
+
+    private fun toast(string: String) {
+        Toast.makeText(context, string, Toast.LENGTH_LONG).show()
     }
 
 }

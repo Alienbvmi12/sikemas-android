@@ -4,34 +4,25 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.example.sikemasapp.R
 import com.example.sikemasapp.databinding.ItemDaysBinding
 import com.example.sikemasapp.databinding.ItemMemberBinding
-
-class RondaDetailAdapter():
-    ListAdapter<Map<String, Any>, RondaDetailAdapter.RondaDetailViewHolder>(DiffCallback) {
+import com.example.sikemasapp.databinding.ItemProfileDetailBinding
+class ProfileDetailAdapter():
+    ListAdapter<Map<String, Any>, ProfileDetailAdapter.ProfileDetailViewHolder>(DiffCallback) {
 
     /**
      * The MarsPhotosViewHolder constructor takes the binding variable from the associated
      * GridViewItem, which nicely gives it access to the full information.
      */
-    class RondaDetailViewHolder(
-        var binding: ItemMemberBinding,
+    class ProfileDetailViewHolder(
+        var binding: ItemProfileDetailBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(member: Map<String, Any?>) {
-            binding.memberName.text = member.getValue("nama").toString()
-            binding.memberPhone.text = member.getValue("phone").toString()
-            val imgUrl = member.getValue("foto").toString()
-            val imgUri = imgUrl.toUri().buildUpon().scheme("http").build()
-            binding.memberPhoto.load(imgUri) {
-                placeholder(R.drawable.loading_animation)
-                error(com.google.android.material.R.drawable.mtrl_ic_error)
-            }
+        fun bind(profileItem: Map<String, Any>, number: Int) {
+            binding.textView5.text = number.toString() + ". " + profileItem.keys.toList()[0]
+            binding.textView16.text = profileItem.values.toList()[0].toString()
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -44,7 +35,7 @@ class RondaDetailAdapter():
      */
     companion object DiffCallback : DiffUtil.ItemCallback<Map<String, Any>>() {
         override fun areItemsTheSame(oldItem: Map<String, Any>, newItem: Map<String, Any>): Boolean {
-            return oldItem.getValue("id") == newItem.getValue("id")
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Map<String, Any>, newItem: Map<String, Any>): Boolean {
@@ -58,17 +49,17 @@ class RondaDetailAdapter():
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): RondaDetailViewHolder {
-        return RondaDetailViewHolder(
-            ItemMemberBinding.inflate(LayoutInflater.from(parent.context))
+    ): ProfileDetailViewHolder {
+        return ProfileDetailViewHolder(
+            ItemProfileDetailBinding.inflate(LayoutInflater.from(parent.context))
         )
     }
 
     /**
      * Replaces the contents of a view (invoked by the layout manager)
      */
-    override fun onBindViewHolder(holder: RondaDetailViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProfileDetailViewHolder, position: Int) {
         val member = getItem(position)
-        holder.bind(member)
+        holder.bind(member, position + 1)
     }
 }

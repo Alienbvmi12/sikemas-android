@@ -165,6 +165,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/selengkapnya"
         android:layout_width="400dp"
         android:layout_height="82dp"
         android:layout_marginTop="18dp"
@@ -175,20 +176,20 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <ImageView
-            android:id="@+id/profile_address_pict"
+            android:id="@+id/profile_selengkapnya_pict"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:padding="15dp"
-            app:srcCompat="@drawable/location_1" />
+            app:srcCompat="@drawable/more_three_dots_button_pngrepo_com" />
 
         <TextView
-            android:id="@+id/profile_address"
+            android:id="@+id/profile_selengkapnya"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingStart="15dp"
-            android:text="Address"
+            android:text="Selengkapnya"
             android:textAlignment="gravity"
             android:textSize="19sp"
             android:textStyle="bold" />
