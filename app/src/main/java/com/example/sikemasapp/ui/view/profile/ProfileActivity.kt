@@ -3,7 +3,10 @@ package com.example.sikemasapp.ui.view.profile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.lifecycle.Observer
@@ -19,6 +22,7 @@ import com.example.sikemasapp.databinding.FragmentLoginBinding
 import com.example.sikemasapp.databinding.FragmentProfileBinding
 import com.example.sikemasapp.databinding.FragmentProfileDetailBinding
 import com.example.sikemasapp.ui.adapters.ProfileDetailAdapter
+import com.example.sikemasapp.ui.component.BlackLoader
 import com.example.sikemasapp.ui.view.ronda.MemberListBottomSheet
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
@@ -30,16 +34,23 @@ class ProfileActivity : AppCompatActivity() {
         binding = FragmentProfileBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this, ProfileViewModelFactory(this))
             .get(ProfileViewModel::class.java)
+
+        val loader = BlackLoader(layoutInflater, binding.root)
+        loader.addLoader(binding.root)
+
         binding.logoutButton.setOnClickListener {
+            loader.showLoader()
             viewModel.logout{
+                loader.hideLoader()
                 startActivity(Intent(this, AuthActivity::class.java))
             }
         }
 
+
         viewModel.userData.observe(this,
             Observer { loginResult ->
                 loginResult ?: return@Observer
-//                loadingProgressBar.visibility = View.GONE
+                loader.hideLoader()
                 loginResult.error?.let {
                     toast(it)
                 }
@@ -76,6 +87,7 @@ class ProfileActivity : AppCompatActivity() {
             }
         )
 
+        loader.showLoader()
         viewModel.getProfile()
         setContentView(binding.root)
     }

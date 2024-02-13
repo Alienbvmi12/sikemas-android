@@ -30,7 +30,16 @@ class RondaFragment : Fragment() {
         viewModel = ViewModelProvider(this, RondaViewModelFactory(requireContext()))
             .get(RondaViewModel::class.java)
         binding = FragmentJadwalRondaBinding.inflate(inflater, container, false)
-        binding.daysRecyclerView.adapter = RondaRecyclerViewAdapter(viewModel.itemList, requireFragmentManager(), viewModel, viewLifecycleOwner, requireContext())
+        binding.daysRecyclerView.adapter = RondaRecyclerViewAdapter(
+            viewModel.itemList,
+            requireFragmentManager(),
+            viewModel,
+            viewLifecycleOwner,
+            requireContext(),
+            inflater,
+            container,
+            binding
+        )
         return binding.root
     }
 

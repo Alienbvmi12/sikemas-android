@@ -18,10 +18,12 @@ import com.example.sikemasapp.data.viewModel.ronda.RondaViewModel
 import com.example.sikemasapp.data.viewModel.ronda.RondaViewModelFactory
 import com.example.sikemasapp.databinding.FragmentKontakPengaduanBinding
 import com.example.sikemasapp.databinding.FragmentLoginBinding
+import com.example.sikemasapp.ui.component.BlackLoader
 
 class KontakPengaduanFragment : Fragment() {
     private lateinit var binding: FragmentKontakPengaduanBinding
     private lateinit var viewModel: KontakPengaduanViewModel
+    private lateinit var loader: BlackLoader
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +33,8 @@ class KontakPengaduanFragment : Fragment() {
         viewModel = ViewModelProvider(this, KontakPengaduanViewModelFactory(requireContext()))
             .get(KontakPengaduanViewModel::class.java)
         binding = FragmentKontakPengaduanBinding.inflate(inflater, container, false)
+        loader = BlackLoader(inflater, container)
+        loader.addLoader(binding.root)
         return binding.root
 
     }
@@ -39,6 +43,7 @@ class KontakPengaduanFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.submitKeluhan.setOnClickListener{
+            loader.showLoader()
             viewModel.postAspirasi(
                 binding.inputPerihal.text.toString(),
                 binding.inputPesan.text.toString()){
@@ -49,6 +54,7 @@ class KontakPengaduanFragment : Fragment() {
         viewModel.aspRes.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 loginResult ?: return@Observer
+                loader.hideLoader()
                 loginResult.error?.let {
                     toast(it)
                 }

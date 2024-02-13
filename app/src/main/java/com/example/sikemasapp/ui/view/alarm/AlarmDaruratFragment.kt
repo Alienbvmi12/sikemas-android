@@ -1,6 +1,7 @@
 package com.example.sikemasapp.ui.view.alarm
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
@@ -17,6 +18,7 @@ import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmDaruratViewModel
 import com.example.sikemasapp.databinding.FragmentAlarmDaruratBinding
 import com.example.sikemasapp.ui.adapters.AlarmDaruratRecyclerViewAdapter
 import com.example.sikemasapp.ui.view._Maps.MapsActivity
+import com.example.sikemasapp.ui.view.alamat.AlamatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -29,6 +31,7 @@ class AlarmDaruratFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var handler: Handler
+    val options = arrayOf("Lokasi Saat Ini", "Pilih Lokasi")
 
 
     override fun onCreateView(
@@ -41,17 +44,9 @@ class AlarmDaruratFragment : Fragment() {
         binding.alarmOptionRecyclerview.adapter = AlarmDaruratRecyclerViewAdapter(
             viewModel.itemList,
             requireContext()
-        ) {
-            // Check for location permission
-            if (checkLocationPermission()) {
-                // Permission is granted, get the current location
-                getCurrentLocation()
-            } else {
-                // Request location permission
-                requestLocationPermission()
-            }
+        ) { event ->
+            showOptionsDialog(event)
         }
-
         startLocationUpdates()
 
         return binding.root
@@ -162,6 +157,33 @@ class AlarmDaruratFragment : Fragment() {
         super.onStop()
         // Stop location updates when the activity is stopped
         fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    private fun showOptionsDialog(event: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Dimana Lokasi Kejadiannya?")
+            .setItems(options) { _, which ->
+                // Handle the selected option
+                val selectedOption = options[which]
+                // Perform action based on the selected option
+                if(which === 0){
+                    // Check for location permission
+                    if (checkLocationPermission()) {
+                        // Permission is granted, get the current location
+                        getCurrentLocation()
+                    } else {
+                        // Request location permission
+                        requestLocationPermission()
+                    }
+                }
+                else{
+                    val intent = Intent(requireContext(), AlamatActivity::class.java)
+                    intent.putExtra("event", event)
+                    startActivity(intent)
+                }
+            }
+        val dialog = builder.create()
+        dialog.show()
     }
     companion object {
         private const val REQUEST_LOCATION_PERMISSION = 1

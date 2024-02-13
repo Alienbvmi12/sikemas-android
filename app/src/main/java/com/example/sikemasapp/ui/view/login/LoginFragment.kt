@@ -19,6 +19,7 @@ import com.example.sikemasapp.R
 import com.example.sikemasapp.data.viewModel.login.LoginViewModel
 import com.example.sikemasapp.data.viewModel.login.LoginViewModelFactory
 import com.example.sikemasapp.databinding.FragmentLoginBinding
+import com.example.sikemasapp.ui.component.BlackLoader
 import com.example.sikemasapp.ui.view.forgot_password.ForgotPasswordActivity
 import com.google.android.material.textfield.TextInputEditText
 
@@ -30,6 +31,7 @@ class LoginFragment(private val viewPager: ViewPager2) : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var loader: BlackLoader
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +40,8 @@ class LoginFragment(private val viewPager: ViewPager2) : Fragment() {
     ): View? {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        loader = BlackLoader(inflater, container)
+        loader.addLoader(binding.root)
         return binding.root
 
     }
@@ -50,7 +54,6 @@ class LoginFragment(private val viewPager: ViewPager2) : Fragment() {
         val usernameEditText: TextInputEditText = binding.username
         val passwordEditText: TextInputEditText = binding.password
         val loginButton = binding.login
-        val loadingProgressBar = binding.loading
         val navToRegister = binding.registerLogin
 
         navToRegister.setOnClickListener {
@@ -74,7 +77,7 @@ class LoginFragment(private val viewPager: ViewPager2) : Fragment() {
         loginViewModel.loginResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 loginResult ?: return@Observer
-                loadingProgressBar.visibility = View.GONE
+                loader.hideLoader()
                 loginResult.error?.let {
                     showLoginFailed(it)
                 }
@@ -117,7 +120,7 @@ class LoginFragment(private val viewPager: ViewPager2) : Fragment() {
         }
 
         loginButton.setOnClickListener {
-            loadingProgressBar.visibility = View.VISIBLE
+            loader.showLoader()
             loginViewModel.login(
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString()

@@ -22,6 +22,7 @@ import com.example.sikemasapp.data.viewModel.register.RegisterViewModel
 import com.example.sikemasapp.data.viewModel.register.RegisterViewModelFactory
 import com.example.sikemasapp.databinding.FragmentLoginBinding
 import com.example.sikemasapp.databinding.FragmentRegisterBinding
+import com.example.sikemasapp.ui.component.BlackLoader
 import com.example.sikemasapp.ui.view.login.LoggedInUserView
 import com.google.android.material.textfield.TextInputEditText
 
@@ -34,6 +35,8 @@ class RegisterFragment(private val viewPager: ViewPager2) : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var loader: BlackLoader
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,6 +44,8 @@ class RegisterFragment(private val viewPager: ViewPager2) : Fragment() {
     ): View? {
 
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        loader = BlackLoader(inflater, container)
+        loader.addLoader(binding.root)
         return binding.root
 
     }
@@ -51,7 +56,6 @@ class RegisterFragment(private val viewPager: ViewPager2) : Fragment() {
             .get(RegisterViewModel::class.java)
         val navToLogin = binding.loginRegister
         val registerButton = binding.register
-        val loadingProgressBar = binding.loading
 
         navToLogin.setOnClickListener {
             viewPager.setCurrentItem(0, true)
@@ -60,7 +64,7 @@ class RegisterFragment(private val viewPager: ViewPager2) : Fragment() {
         viewModel.registerResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 loginResult ?: return@Observer
-                loadingProgressBar.visibility = View.GONE
+                loader.hideLoader()
                 loginResult.error?.let {
                     showLoginFailed(it)
                 }
@@ -70,7 +74,7 @@ class RegisterFragment(private val viewPager: ViewPager2) : Fragment() {
             })
 
         registerButton.setOnClickListener {
-            loadingProgressBar.visibility = View.VISIBLE
+            loader.showLoader()
             viewModel.register(
                 binding.insertNik.text.toString(),
                 binding.insertEmail.text.toString(),

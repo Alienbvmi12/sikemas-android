@@ -17,10 +17,12 @@ import com.example.sikemasapp.data.viewModel.forgotPassword.ForgotPasswordViewMo
 import com.example.sikemasapp.data.viewModel.forgotPassword.ForgotPasswordViewModelFactory
 import com.example.sikemasapp.databinding.FragmentEmailVerificationBinding
 import com.example.sikemasapp.databinding.FragmentForgotPasswordBinding
+import com.example.sikemasapp.ui.component.BlackLoader
 
 class ForgotPasswordOtpFragment: Fragment() {
     private lateinit var binding: FragmentEmailVerificationBinding
     private lateinit var viewModel: ForgotPasswordViewModel
+    private lateinit var loader: BlackLoader
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,18 +30,20 @@ class ForgotPasswordOtpFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEmailVerificationBinding.inflate(layoutInflater)
+        loader = BlackLoader(inflater, container)
+        loader.addLoader(binding.root)
         viewModel = ViewModelProvider(this, ForgotPasswordViewModelFactory(requireContext()))
             .get(ForgotPasswordViewModel::class.java)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val loadingProgressBar = binding.loading
+
 
         viewModel.otpReqResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 loginResult ?: return@Observer
-                loadingProgressBar.visibility = View.GONE
+                loader.hideLoader()
                 loginResult.error?.let {
                     toast(it)
                 }
@@ -50,12 +54,12 @@ class ForgotPasswordOtpFragment: Fragment() {
             })
 
         binding.kirimUlangKode.setOnClickListener {
-            loadingProgressBar.visibility = View.VISIBLE
+            loader.showLoader()
             viewModel.resendOtp()
         }
 
         binding.kirimOtp.setOnClickListener{
-            loadingProgressBar.visibility = View.VISIBLE
+            loader.showLoader()
             viewModel.submitOtp(binding.otp.text.toString())
         }
 

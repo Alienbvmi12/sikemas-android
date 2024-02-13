@@ -1,9 +1,13 @@
 package com.example.sikemasapp
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.TypedArray
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -33,6 +37,9 @@ import com.example.sikemasapp.ui.view.profile.ProfileActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.Firebase
 import com.google.firebase.messaging.messaging
+import android.provider.Settings
+import android.widget.RemoteViews
+import androidx.core.content.ContextCompat
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -56,33 +63,7 @@ class MainActivity2 : AppCompatActivity() {
 
         //Setup firebase message broadcast
 
-        Firebase.messaging.subscribeToTopic("emergency")
-            .addOnCompleteListener { task ->
-                var msg = "Subscribed"
-                if (!task.isSuccessful) {
-                    msg = "Subscribe failed"
-                }
-                Log.d(TAG, msg)
-                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-            }
-
-        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this, "FirebaseChannel")
-            .setSmallIcon(R.drawable.alarm_1)
-            .setContentTitle("TEST")
-            .setContentText("TEST")
-            .setAutoCancel(true)
-
-        val manager: NotificationManagerCompat = NotificationManagerCompat.from(this)
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        manager.notify(1001, builder.build())
-
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        //push notification
 
         setSupportActionBar(appbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)

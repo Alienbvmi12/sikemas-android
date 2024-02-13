@@ -16,10 +16,12 @@ import com.example.sikemasapp.data.viewModel.forgotPassword.ForgotPasswordViewMo
 import com.example.sikemasapp.databinding.FragmentEmailVerificationBinding
 import com.example.sikemasapp.databinding.FragmentForgotPasswordBinding
 import com.example.sikemasapp.databinding.FragmentResetPasswordBinding
+import com.example.sikemasapp.ui.component.BlackLoader
 
 class ResetPasswordFragment: Fragment() {
     private lateinit var binding: FragmentResetPasswordBinding
     private lateinit var viewModel: ForgotPasswordViewModel
+    private lateinit var loader: BlackLoader
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,19 +29,20 @@ class ResetPasswordFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentResetPasswordBinding.inflate(layoutInflater)
+        loader = BlackLoader(inflater, container)
+        loader.addLoader(binding.root)
         viewModel = ViewModelProvider(this, ForgotPasswordViewModelFactory(requireContext()))
             .get(ForgotPasswordViewModel::class.java)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val loadingProgressBar = binding.loading2
         val submitPassword = binding.kirimPassword
 
         viewModel.otpReqResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 loginResult ?: return@Observer
-                loadingProgressBar.visibility = View.GONE
+                loader.hideLoader()
                 loginResult.error?.let {
                     toast(it)
                 }
@@ -50,7 +53,7 @@ class ResetPasswordFragment: Fragment() {
             })
 
         submitPassword.setOnClickListener {
-            loadingProgressBar.visibility = View.VISIBLE
+            loader.showLoader()
             viewModel.submitPassword(
                 binding.password.text.toString(),
                 binding.confirmPassword.text.toString()

@@ -20,6 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.view.alamat.AlamatActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.view.forgot_password.ForgotPasswordActivity"
             android:exported="false" />
         <activity
@@ -71,7 +74,7 @@
             android:name=".MyFirebaseInstanceIDService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <!--

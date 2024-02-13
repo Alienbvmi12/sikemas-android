@@ -1,0 +1,52 @@
+<!-- custom_notification_layout.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dual_monitor_wallpaper_free_hd_wallpapers_backgrounds_download_6">
+
+    <!-- ImageView for the background image -->
+
+    <!-- Other notification content goes here -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/notification_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:text="DARURAT!!"
+                android:textAlignment="center"
+                android:textColor="#F5F5F5"
+                android:textSize="23dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/notification_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView17"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:text="Telah terjadi pencuirian di rumah pak Agus! semua orang yang berada dekat dengan lokasi diharapkan membantu"
+                android:textAlignment="center"
+                android:textColor="#F5F5F5"
+                android:textSize="13dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+</RelativeLayout>

@@ -13,17 +13,22 @@ import com.example.sikemasapp.data.viewModel.register.RegisterViewModel
 import com.example.sikemasapp.data.viewModel.register.RegisterViewModelFactory
 import com.example.sikemasapp.databinding.FragmentEmailVerificationBinding
 import com.example.sikemasapp.databinding.FragmentRegisterBinding
+import com.example.sikemasapp.ui.component.BlackLoader
 
 private lateinit var viewModel: RegisterViewModel
 private var _binding: FragmentRegisterBinding? = null
 
 class EmailVerificationActivity : AppCompatActivity() {
     private lateinit var binding: FragmentEmailVerificationBinding
+    private lateinit var loader: BlackLoader
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, RegisterViewModelFactory(this))
             .get(RegisterViewModel::class.java)
         binding = FragmentEmailVerificationBinding.inflate(layoutInflater)
+        loader = BlackLoader(layoutInflater, binding.root)
+        loader.addLoader(binding.root)
         val kirimButton = binding.kirimOtp
         val kolomOtp = binding.otp
         val loadingProgressBar = binding.loading
@@ -31,7 +36,7 @@ class EmailVerificationActivity : AppCompatActivity() {
         viewModel.registerResult.observe(this,
             Observer { loginResult ->
                 loginResult ?: return@Observer
-                loadingProgressBar.visibility = View.GONE
+                loader.hideLoader()
                 loginResult.error?.let {
                     toast(it)
                 }
@@ -43,7 +48,7 @@ class EmailVerificationActivity : AppCompatActivity() {
         viewModel.resendResult.observe(this,
             Observer { loginResult ->
                 loginResult ?: return@Observer
-                loadingProgressBar.visibility = View.GONE
+                loader.hideLoader()
                 loginResult.error?.let {
                     toast(it)
                 }
@@ -53,11 +58,11 @@ class EmailVerificationActivity : AppCompatActivity() {
             })
 
         kirimButton.setOnClickListener{
-            loadingProgressBar.visibility = View.VISIBLE
+            loader.showLoader()
             viewModel.submitOtp(kolomOtp.text.toString())
         }
         binding.kirimUlangKode.setOnClickListener {
-            loadingProgressBar.visibility = View.VISIBLE
+            loader.showLoader()
             viewModel.resendOtp()
         }
 

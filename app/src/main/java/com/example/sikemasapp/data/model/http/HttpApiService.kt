@@ -12,7 +12,7 @@ import retrofit2.http.*
 
 //const val BASE_URL = "http://192.168.43.236/infomotor_api/"
 //const val BASE_URL = "http://192.168.0.105/infomotor_api/"
-const val BASE_URL = "https://976c-103-157-59-161.ngrok-free.app/sikemas-api-seme/" //Ganti dengan base url api yang tadi dibuat
+const val BASE_URL = "https://2301-103-157-59-161.ngrok-free.app/sikemas-api-seme/" //Ganti dengan base url api yang tadi dibuat
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
 
@@ -52,6 +52,12 @@ interface HttpApiService{
     @GET("api/ronda/get_jadwal/{day}/")
     suspend fun getJadwal(
         @Path("day") day: String,
+        @Header("Authorization") token: String
+    ): Response<HttpResponseList>
+
+    @GET("api/alamat/get/{keyword}/")
+    suspend fun getAlamat(
+        @Path("keyword") keyword: String,
         @Header("Authorization") token: String
     ): Response<HttpResponseList>
 

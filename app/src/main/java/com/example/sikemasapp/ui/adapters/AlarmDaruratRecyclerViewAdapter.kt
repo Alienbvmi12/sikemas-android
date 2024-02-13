@@ -13,7 +13,7 @@ import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmDaruratItem
 class AlarmDaruratRecyclerViewAdapter(
     private val dataset: List<AlarmDaruratItem>,
     private val context: Context,
-    private val showLocation: () -> Any
+    private val showLocation: (String) -> Any
 ):
     RecyclerView.Adapter<AlarmDaruratRecyclerViewAdapter.AlarmDaruratViewHolder>() {
 
@@ -32,7 +32,7 @@ class AlarmDaruratRecyclerViewAdapter(
         holder.text.text = item.text
         holder.icon.setImageResource(item.icon)
         holder.view.setOnClickListener{
-            showLocation()
+            showLocation(item.text)
         }
     }
 
