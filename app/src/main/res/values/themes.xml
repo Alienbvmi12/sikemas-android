@@ -5,15 +5,15 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">#C2CFF2</item>
-        <item name="colorPrimaryVariant">#C2CFF2</item>
+        <item name="colorPrimary">#1FA866</item>
+        <item name="colorPrimaryVariant">#1FA866</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#002584</item>
+        <item name="colorSecondary">#85FFA7</item>
         <item name="colorSecondaryVariant">#CFCFCF</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">#C2CFF2</item>
+        <item name="android:statusBarColor">#1FA866</item>
 
     </style>
 

@@ -23,9 +23,10 @@ class MemberListBottomSheet(val viewModel: RondaViewModel, val dayName: String):
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentRondaDetailBinding.inflate(layoutInflater)
-        binding.rondaDetailRecyclerview.adapter = RondaDetailAdapter()
-        binding.day = dayName
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.rondaDetailRecyclerview.adapter = RondaDetailAdapter(requireContext())
         binding.viewModel = viewModel
+        binding.day = dayName
         return binding.root
     }
 }

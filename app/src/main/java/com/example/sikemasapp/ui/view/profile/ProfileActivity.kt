@@ -1,29 +1,21 @@
 package com.example.sikemasapp.ui.view.profile
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.sikemasapp.AuthActivity
 import com.example.sikemasapp.R
-import com.example.sikemasapp.data.viewModel.login.LoginViewModel
-import com.example.sikemasapp.data.viewModel.login.LoginViewModelFactory
 import com.example.sikemasapp.data.viewModel.profile.ProfileViewModel
 import com.example.sikemasapp.data.viewModel.profile.ProfileViewModelFactory
-import com.example.sikemasapp.databinding.FragmentLoginBinding
 import com.example.sikemasapp.databinding.FragmentProfileBinding
 import com.example.sikemasapp.databinding.FragmentProfileDetailBinding
 import com.example.sikemasapp.ui.adapters.ProfileDetailAdapter
 import com.example.sikemasapp.ui.component.BlackLoader
-import com.example.sikemasapp.ui.view.ronda.MemberListBottomSheet
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ProfileActivity : AppCompatActivity() {
@@ -87,8 +79,23 @@ class ProfileActivity : AppCompatActivity() {
             }
         )
 
+        // Get the extras (if there are any)
+        // Get the extras (if there are any)
+        val extras = intent.extras
+        if (extras != null) {
+            if (extras.containsKey("id")) {
+                val id = intent.getStringExtra("id")
+                viewModel.getProfile(id.toString())
+            }
+            else{
+                viewModel.getProfile()
+            }
+        }
+        else{
+            viewModel.getProfile()
+        }
+
         loader.showLoader()
-        viewModel.getProfile()
         setContentView(binding.root)
     }
 

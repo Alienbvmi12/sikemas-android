@@ -25,22 +25,26 @@ class KontakPengaduanViewModel(context: Context): ViewModel() {
 
     fun postAspirasi(perihal: String, pesan: String, callback: () -> Any){
         viewModelScope.launch {
-            val result = HttpApi.retrofitService.sendAspirasi(
-                userSessionManager.getToken().toString(),
-                mapOf(
-                    "id" to userSessionManager.getLoginInfo().getValue("id").toString(),
-                    "perihal" to perihal,
-                    "pesan" to pesan
+            try{
+                val result = HttpApi.retrofitService.sendAspirasi(
+                    userSessionManager.getToken().toString(),
+                    mapOf(
+                        "id" to userSessionManager.getLoginInfo().getValue("id").toString(),
+                        "perihal" to perihal,
+                        "pesan" to pesan
+                    )
                 )
-            )
-            if(result.isSuccessful){
-                _aspRes.value = RegisterResult(success = LoggedInUserView(result.body()!!.message))
-                callback()
-            }
-            else{
-                Log.d("tes", result.errorBody()!!.string())
-                val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
-                _aspRes.value = RegisterResult(error = responseJson.message)
+                if(result.isSuccessful){
+                    _aspRes.value = RegisterResult(success = LoggedInUserView(result.body()!!.message))
+                    callback()
+                }
+                else{
+                    Log.d("tes", result.errorBody()!!.string())
+                    val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
+                    _aspRes.value = RegisterResult(error = responseJson.message)
+                }
+            } catch (e:Exception){
+                _aspRes.value = RegisterResult(error = "Request Error")
             }
         }
     }

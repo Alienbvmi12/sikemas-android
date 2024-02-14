@@ -40,67 +40,79 @@ class RegisterViewModel(
     fun register(nik: String, email: String, username: String, password: String, confirmPassword: String) {
         viewModelScope.launch {
             // can be launched in a separate asynchronous job
-            val result = HttpApi.retrofitService.register(mapOf(
-                "nik" to nik,
-                "email" to email,
-                "username" to username,
-                "password" to password,
-                "confirm_password" to confirmPassword
-            ))
+            try{
+                val result = HttpApi.retrofitService.register(mapOf(
+                    "nik" to nik,
+                    "email" to email,
+                    "username" to username,
+                    "password" to password,
+                    "confirm_password" to confirmPassword
+                ))
 
-            if (result.isSuccessful) {
-                _registerResult.value =
-                    RegisterResult(success = LoggedInUserView(displayName = result.body()!!.data["username"].toString()))
-                registerSessionManager.saveRegisterInfo(
-                    result.body()!!.data["reg_id"].toString(),
-                    result.body()!!.data["username"].toString(),
-                    result.body()!!.data["email"].toString()
-                )
-            } else {
-                val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
-                _registerResult.value = RegisterResult(error = responseJson.message.toString())
+                if (result.isSuccessful) {
+                    _registerResult.value =
+                        RegisterResult(success = LoggedInUserView(displayName = result.body()!!.data["username"].toString()))
+                    registerSessionManager.saveRegisterInfo(
+                        result.body()!!.data["reg_id"].toString(),
+                        result.body()!!.data["username"].toString(),
+                        result.body()!!.data["email"].toString()
+                    )
+                } else {
+                    val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
+                    _registerResult.value = RegisterResult(error = responseJson.message.toString())
+                }
+            } catch(e: Exception){
+                _registerResult.value = RegisterResult(error = "Request Error")
             }
         }
     }
 
     fun submitOtp(otp: String){
         viewModelScope.launch {
-            val result = HttpApi.retrofitService.verifyEmail(mapOf(
-                "reg_id" to registerSessionManager.getRegisterInfo().getValue("reg_id").toString(),
-                "otp" to otp
-            ))
+            try{
+                val result = HttpApi.retrofitService.verifyEmail(mapOf(
+                    "reg_id" to registerSessionManager.getRegisterInfo().getValue("reg_id").toString(),
+                    "otp" to otp
+                ))
 
-            if (result.isSuccessful) {
-                _registerResult.value =
-                    RegisterResult(success = LoggedInUserView(displayName = result.body()!!.message))
-                userSessionManager.saveLoginInfo(
-                    result.body()!!.data["id"].toString(),
-                    result.body()!!.data["username"].toString(),
-                    result.body()!!.data["email"].toString()
-                )
-                userSessionManager.saveToken(result.body()!!.data["token"].toString())
-                registerSessionManager.clearSession()
-            } else {
-                val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
-                _registerResult.value = RegisterResult(error = responseJson.message.toString())
+                if (result.isSuccessful) {
+                    _registerResult.value =
+                        RegisterResult(success = LoggedInUserView(displayName = result.body()!!.message))
+                    userSessionManager.saveLoginInfo(
+                        result.body()!!.data["id"].toString(),
+                        result.body()!!.data["username"].toString(),
+                        result.body()!!.data["email"].toString()
+                    )
+                    userSessionManager.saveToken(result.body()!!.data["token"].toString())
+                    registerSessionManager.clearSession()
+                } else {
+                    val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
+                    _registerResult.value = RegisterResult(error = responseJson.message.toString())
+                }
+            } catch(e: Exception){
+                _registerResult.value = RegisterResult(error = "Request Error")
             }
         }
     }
 
     fun resendOtp(){
         viewModelScope.launch {
-            val registerInfo = registerSessionManager.getRegisterInfo()
-            val result = HttpApi.retrofitService.resendOtp(mapOf(
-                "reg_id" to registerInfo.getValue("reg_id").toString(),
-                "email" to registerInfo.getValue("email").toString(),
-                "username" to registerInfo.getValue("username").toString()
-            ))
-            if (result.isSuccessful) {
-                _resendResult.value =
-                    RegisterResult(success = LoggedInUserView(displayName = result.body()!!.message))
-            } else {
-                val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
-                _resendResult.value = RegisterResult(error = responseJson.message.toString())
+            try{
+                val registerInfo = registerSessionManager.getRegisterInfo()
+                val result = HttpApi.retrofitService.resendOtp(mapOf(
+                    "reg_id" to registerInfo.getValue("reg_id").toString(),
+                    "email" to registerInfo.getValue("email").toString(),
+                    "username" to registerInfo.getValue("username").toString()
+                ))
+                if (result.isSuccessful) {
+                    _resendResult.value =
+                        RegisterResult(success = LoggedInUserView(displayName = result.body()!!.message))
+                } else {
+                    val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
+                    _resendResult.value = RegisterResult(error = responseJson.message.toString())
+                }
+            } catch(e: Exception){
+                _resendResult.value = RegisterResult(error = "Request Error")
             }
         }
     }

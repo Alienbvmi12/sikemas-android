@@ -29,7 +29,7 @@ class RondaViewModel(context: Context): ViewModel() {
     private var _rondaRes = MutableLiveData<RondaResult>()
     val rondaRes: LiveData<RondaResult> = _rondaRes
 
-    private var _memberList = MutableLiveData<List<Map<String, Any>>>(
+    private var _memberList = MutableLiveData<List<Map<String, Any>?>>(
         listOf(
             mapOf(
                 "id" to "",
@@ -40,24 +40,28 @@ class RondaViewModel(context: Context): ViewModel() {
             )
         )
     )
-    val memberList: LiveData<List<Map<String, Any>>> = _memberList
+    val memberList: LiveData<List<Map<String, Any>?>> = _memberList
 
     private val userSessionManager: UserSessionManager = UserSessionManager(context)
 
     fun getJadwalRonda(day: String, callback: () -> Any){
         viewModelScope.launch {
-            val result = HttpApi.retrofitService.getJadwal(day,
-                userSessionManager.getToken().toString()
-            )
-            if(result.isSuccessful){
-                _rondaRes.value = RondaResult(success = result.body())
-                _memberList.value = result.body()!!.data
-                callback()
-            }
-            else{
-                Log.d("sok", result.errorBody()!!.string())
-                val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
-                _rondaRes.value = RondaResult(error = responseJson.message)
+            try{
+                val result = HttpApi.retrofitService.getJadwal(day,
+                    userSessionManager.getToken().toString()
+                )
+                if(result.isSuccessful){
+                    _rondaRes.value = RondaResult(success = result.body())
+                    _memberList.value = result.body()!!.data
+                    callback()
+                }
+                else{
+                    Log.d("sok", result.errorBody()!!.string())
+                    val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
+                    _rondaRes.value = RondaResult(error = responseJson.message)
+                }
+            } catch(e: Exception){
+                _rondaRes.value = RondaResult(error = "Request Error")
             }
         }
     }

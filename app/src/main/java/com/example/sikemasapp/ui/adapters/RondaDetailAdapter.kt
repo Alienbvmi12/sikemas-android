@@ -1,5 +1,6 @@
 package com.example.sikemasapp.ui.adapters
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,8 +13,9 @@ import coil.load
 import com.example.sikemasapp.R
 import com.example.sikemasapp.databinding.ItemDaysBinding
 import com.example.sikemasapp.databinding.ItemMemberBinding
+import com.example.sikemasapp.ui.view.profile.ProfileActivity
 
-class RondaDetailAdapter():
+class RondaDetailAdapter(val context: Context):
     ListAdapter<Map<String, Any>, RondaDetailAdapter.RondaDetailViewHolder>(DiffCallback) {
 
     /**
@@ -23,7 +25,12 @@ class RondaDetailAdapter():
     class RondaDetailViewHolder(
         var binding: ItemMemberBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(member: Map<String, Any?>) {
+        fun bind(member: Map<String, Any?>, context: Context) {
+            binding.root.setOnClickListener{
+//                val intent = Intent(context, ProfileActivity::class.java)
+//                intent.putExtra("id", member.getValue("id").toString())
+//                context.startActivity(intent)
+            }
             binding.memberName.text = member.getValue("nama").toString()
             binding.memberPhone.text = member.getValue("phone").toString()
             val imgUrl = member.getValue("foto").toString()
@@ -69,6 +76,6 @@ class RondaDetailAdapter():
      */
     override fun onBindViewHolder(holder: RondaDetailViewHolder, position: Int) {
         val member = getItem(position)
-        holder.bind(member)
+        holder.bind(member, context)
     }
 }

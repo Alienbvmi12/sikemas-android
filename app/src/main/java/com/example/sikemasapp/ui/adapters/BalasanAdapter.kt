@@ -10,48 +10,35 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sikemasapp.data.viewModel.alamat.AlamatItem
 import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmDaruratViewModel
+import com.example.sikemasapp.data.viewModel.balasan.BalasanItem
 import com.example.sikemasapp.databinding.ItemAlamatBinding
+import com.example.sikemasapp.databinding.ItemBalasanBinding
 import com.example.sikemasapp.ui.component.DoubleTapGestureListener
 
-class AlamatAdapter(
+class BalasanAdapter(
     private val context: Context,
     private val viewModel: AlarmDaruratViewModel,
     private val intent: Intent,
     private val toast: (s: String) -> Any
-): ListAdapter<AlamatItem, AlamatAdapter.MotorcyclesViewHolder>(DiffCallback) {
+): ListAdapter<BalasanItem, BalasanAdapter.MotorcyclesViewHolder>(DiffCallback) {
 
     /**
      * The MarsPhotosViewHolder constructor takes the binding variable from the associated
      * GridViewItem, which nicely gives it access to the full information.
      */
     class MotorcyclesViewHolder(
-        var binding: ItemAlamatBinding,
+        var binding: ItemBalasanBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            member: AlamatItem,
+            member: BalasanItem,
             context: Context,
             viewModel: AlarmDaruratViewModel,
             intent: Intent,
             toast: (s: String) -> Any
         ) {
-            binding.alamat = member
+            binding.balasan = member
             var nama = ""
-            nama = member.nama ?: "-"
-            val gestureDetector = GestureDetector(context, DoubleTapGestureListener(context){
-                viewModel.triggerAlarm(
-                    intent.getStringExtra("event")!!,
-                    1,
-                    member.alamat,
-                    nama,
-                    member.id
-                ){
-                    toast("Alarm berhasil dibunyikan!!")
-
-                }
-            })
-            binding.root.setOnTouchListener { _, event ->
-                gestureDetector.onTouchEvent(event)
-            }
+            nama = member.name ?: "-"
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -62,13 +49,13 @@ class AlamatAdapter(
      * Allows the RecyclerView to determine which items have changed when the [List]
      * has been updated.
      */
-    companion object DiffCallback : DiffUtil.ItemCallback<AlamatItem>() {
-        override fun areItemsTheSame(oldItem: AlamatItem, newItem: AlamatItem): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<BalasanItem>() {
+        override fun areItemsTheSame(oldItem: BalasanItem, newItem: BalasanItem): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: AlamatItem, newItem: AlamatItem): Boolean {
-            return oldItem.alamat == newItem.alamat
+        override fun areContentsTheSame(oldItem: BalasanItem, newItem: BalasanItem): Boolean {
+            return oldItem.body == newItem.body
         }
     }
 
@@ -80,7 +67,7 @@ class AlamatAdapter(
         viewType: Int
     ): MotorcyclesViewHolder {
         return MotorcyclesViewHolder(
-            ItemAlamatBinding.inflate(LayoutInflater.from(parent.context))
+            ItemBalasanBinding.inflate(LayoutInflater.from(parent.context))
         )
     }
 

@@ -1,5 +1,7 @@
 package com.example.sikemasapp.data.model.http
 
+import com.example.sikemasapp.data.viewModel.alamat.AlamatItem
+import com.example.sikemasapp.data.viewModel.alamat.BalasanItem
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -10,9 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
-//const val BASE_URL = "http://192.168.43.236/infomotor_api/"
-//const val BASE_URL = "http://192.168.0.105/infomotor_api/"
-const val BASE_URL = "https://2301-103-157-59-161.ngrok-free.app/sikemas-api-seme/" //Ganti dengan base url api yang tadi dibuat
+const val BASE_URL = "https://32bb-103-157-59-161.ngrok-free.app/sikemas-api-seme/"
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
 
@@ -55,11 +55,23 @@ interface HttpApiService{
         @Header("Authorization") token: String
     ): Response<HttpResponseList>
 
-    @GET("api/alamat/get/{keyword}/")
+    @GET("api/alamat/search/{keyword}")
     suspend fun getAlamat(
         @Path("keyword") keyword: String,
         @Header("Authorization") token: String
-    ): Response<HttpResponseList>
+    ): Response<HttpResponseAlamat>
+
+    @GET("api/balasan/get/{id}")
+    suspend fun getBalasan(
+        @Path("id") keyword: String,
+        @Header("Authorization") token: String
+    ): Response<HttpResponseBalasan>
+
+    @POST("api/darurat/emergency_alarm/")
+    suspend fun triggerAlarm(
+        @Header("Authorization") token: String,
+        @Body body: Map<String, String>
+    ): Response<HttpResponse>
 
     @POST("api/aspirasi/post_aspirasi/")
     suspend fun sendAspirasi(
@@ -83,5 +95,17 @@ data class HttpResponse(
 data class HttpResponseList(
     val status: Int,
     val message: String,
-    val data: List<Map<String, Any>>
+    val data: List<Map<String, Any>?>
+)
+
+data class HttpResponseAlamat(
+    val status: Int,
+    val message: String,
+    val data: List<AlamatItem>
+)
+
+data class HttpResponseBalasan(
+    val status: Int,
+    val message: String,
+    val data: List<BalasanItem>
 )

@@ -33,22 +33,26 @@ class LoginViewModel(
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
-            // can be launched in a separate asynchronous job
-            val result = HttpApi.retrofitService.login(mapOf(
-                "username" to username,
-                "password" to password
-            ))
+            try{
+                // can be launched in a separate asynchronous job
+                val result = HttpApi.retrofitService.login(mapOf(
+                    "username" to username,
+                    "password" to password
+                ))
 
-            if (result.isSuccessful) {
-                _loginResult.value =
-                    LoginResult(success = LoggedInUserView(displayName = result.body()!!.data["username"].toString()))
-                userSessionManager.saveLoginInfo(
-                    result.body()!!.data["id"].toString(),
-                    result.body()!!.data["username"].toString(),
-                    result.body()!!.data["email"].toString()
-                )
-                userSessionManager.saveToken(result.body()!!.data["token"].toString())
-            } else {
+                if (result.isSuccessful) {
+                    _loginResult.value =
+                        LoginResult(success = LoggedInUserView(displayName = result.body()!!.data["username"].toString()))
+                    userSessionManager.saveLoginInfo(
+                        result.body()!!.data["id"].toString(),
+                        result.body()!!.data["username"].toString(),
+                        result.body()!!.data["email"].toString()
+                    )
+                    userSessionManager.saveToken(result.body()!!.data["token"].toString())
+                } else {
+                    _loginResult.value = LoginResult(error = R.string.login_failed)
+                }
+            } catch (e:Exception){
                 _loginResult.value = LoginResult(error = R.string.login_failed)
             }
         }

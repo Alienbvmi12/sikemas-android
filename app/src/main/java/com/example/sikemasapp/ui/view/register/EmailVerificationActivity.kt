@@ -31,7 +31,6 @@ class EmailVerificationActivity : AppCompatActivity() {
         loader.addLoader(binding.root)
         val kirimButton = binding.kirimOtp
         val kolomOtp = binding.otp
-        val loadingProgressBar = binding.loading
 
         viewModel.registerResult.observe(this,
             Observer { loginResult ->

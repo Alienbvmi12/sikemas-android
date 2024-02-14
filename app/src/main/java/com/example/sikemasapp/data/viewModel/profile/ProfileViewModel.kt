@@ -2,6 +2,7 @@ package com.example.sikemasapp.data.viewModel.profile
 
 import android.content.Context
 import android.provider.ContactsContract.Profile
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,30 +36,39 @@ class ProfileViewModel(
 
     fun logout(callback: () -> Any){
         viewModelScope.launch {
-            HttpApi.retrofitService.logout(
-                mapOf(
-                    "token" to userSessionManager.getToken().toString()
+            try{
+                HttpApi.retrofitService.logout(
+                    mapOf(
+                        "token" to userSessionManager.getToken().toString()
+                    )
                 )
-            )
-            userSessionManager.clearSession()
-            callback()
+                userSessionManager.clearSession()
+                callback()
+            } catch (e:Exception){
+
+            }
         }
     }
 
     fun getProfile(id: String = userSessionManager.getLoginInfo().getValue("id").toString()){
         viewModelScope.launch {
+            Log.d("idqefd peak peak", id)
             if (userSessionManager.isLoginInfoExist()){
-                val result = HttpApi.retrofitService.getProfile(
-                    id,
-                    userSessionManager.getToken().toString()
-                )
-                if(result.isSuccessful) {
-                    _userData.value = ProfileResult(success = result.body()!!)
-                    setDisplayProfile(result.body()!!)
-                }
-                else{
-                    val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
-                    _userData.value = ProfileResult(error = responseJson.message)
+                try {
+                    val result = HttpApi.retrofitService.getProfile(
+                        id,
+                        userSessionManager.getToken().toString()
+                    )
+                    if(result.isSuccessful) {
+                        _userData.value = ProfileResult(success = result.body()!!)
+                        setDisplayProfile(result.body()!!)
+                    }
+                    else{
+                        val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
+                        _userData.value = ProfileResult(error = responseJson.message)
+                    }
+                } catch (e: Exception){
+                    _userData.value = ProfileResult(error = "Request Error")
                 }
             } else{
                 _userData.value = ProfileResult(error = "belum login")

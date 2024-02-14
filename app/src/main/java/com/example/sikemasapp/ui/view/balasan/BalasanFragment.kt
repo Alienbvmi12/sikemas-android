@@ -1,36 +1,47 @@
 package com.example.sikemasapp.ui.view.alamat
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.sikemasapp.data.viewModel.alamat.AlamatViewModel
+import com.example.sikemasapp.data.viewModel.alamat.BalasanViewModel
 import com.example.sikemasapp.data.viewModel.alamat.BalasanViewModelFactory
 import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmDaruratViewModel
-import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmViewModelFactory
 import com.example.sikemasapp.databinding.FragmentAlamatBinding
 import com.example.sikemasapp.ui.adapters.AlamatAdapter
 import com.example.sikemasapp.ui.component.BlackLoader
 
-class AlamatActivity : AppCompatActivity() {
+class BalasanFragment : Fragment() {
     private lateinit var binding: FragmentAlamatBinding
-    private lateinit var viewModel: AlamatViewModel
-    private lateinit var viewModelAlarm: AlarmDaruratViewModel
+    private lateinit var viewModel: BalasanViewModel
     private lateinit var loader: BlackLoader
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        viewModel = ViewModelProvider(this, BalasanViewModelFactory(requireContext()))
+            .get(BalasanViewModel::class.java)
+        viewModel.init()
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        binding = FragmentAlamatBinding.inflate(layoutInflater)
+        return binding.root
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, BalasanViewModelFactory(this))
-            .get(AlamatViewModel::class.java)
-        viewModelAlarm = ViewModelProvider(this, AlarmViewModelFactory(this))
-            .get(AlarmDaruratViewModel::class.java)
 
-        viewModel.init()
-        binding = FragmentAlamatBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
         binding.alamatGallery.adapter = AlamatAdapter(this, viewModelAlarm, intent
         ){ message ->
             toast(message)

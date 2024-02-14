@@ -40,78 +40,94 @@ class ForgotPasswordViewModel(
     fun submitEmail(email: String) {
         viewModelScope.launch {
             // can be launched in a separate asynchronous job
-            val result = HttpApi.retrofitService.requestResetPassword(mapOf(
-                "email" to email
-            ))
+            try{
+                val result = HttpApi.retrofitService.requestResetPassword(mapOf(
+                    "email" to email
+                ))
 
-            if (result.isSuccessful) {
-                _otpReqResult.value =
-                    RegisterResult(success = LoggedInUserView(displayName = result.body()!!.message.toString()))
-                forgotSessionManager.saveEmail(email)
-            } else {
-                val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
-                _otpReqResult.value = RegisterResult(error = responseJson.message)
+                if (result.isSuccessful) {
+                    _otpReqResult.value =
+                        RegisterResult(success = LoggedInUserView(displayName = result.body()!!.message.toString()))
+                    forgotSessionManager.saveEmail(email)
+                } else {
+                    val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
+                    _otpReqResult.value = RegisterResult(error = responseJson.message)
+                }
+            } catch (e:Exception){
+                _otpReqResult.value = RegisterResult(error = "Request Error")
             }
         }
     }
 
     fun resendOtp() {
         viewModelScope.launch {
-            // can be launched in a separate asynchronous job
-            val email = forgotSessionManager.getEmail().toString()
-            val result = HttpApi.retrofitService.requestResetPassword(mapOf(
-                "email" to email
-            ))
+            try{
+                // can be launched in a separate asynchronous job
+                val email = forgotSessionManager.getEmail().toString()
+                val result = HttpApi.retrofitService.requestResetPassword(mapOf(
+                    "email" to email
+                ))
 
-            if (result.isSuccessful) {
-                _otpReqResult2.value =
-                    RegisterResult(success = LoggedInUserView(displayName = "Berhasil kirim ulang kode!!"))
-            } else {
-                val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
-                _otpReqResult2.value = RegisterResult(error = responseJson.message)
+                if (result.isSuccessful) {
+                    _otpReqResult2.value =
+                        RegisterResult(success = LoggedInUserView(displayName = "Berhasil kirim ulang kode!!"))
+                } else {
+                    val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
+                    _otpReqResult2.value = RegisterResult(error = responseJson.message)
+                }
+            } catch (e:Exception){
+                _otpReqResult2.value = RegisterResult(error = "Request Error")
             }
         }
     }
 
     fun submitOtp(otp: String) {
         viewModelScope.launch {
-            // can be launched in a separate asynchronous job
-            val email = forgotSessionManager.getEmail().toString()
-            val result = HttpApi.retrofitService.resetPasswordOtpVerify(mapOf(
-                "email" to email,
-                "otp" to otp
-            ))
+            try{
+                // can be launched in a separate asynchronous job
+                val email = forgotSessionManager.getEmail().toString()
+                val result = HttpApi.retrofitService.resetPasswordOtpVerify(mapOf(
+                    "email" to email,
+                    "otp" to otp
+                ))
 
-            if (result.isSuccessful) {
-                _otpReqResult.value =
-                    RegisterResult(success = LoggedInUserView(displayName = result.body()!!.message))
-                forgotSessionManager.saveOtp(otp)
-            } else {
-                val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
-                _otpReqResult.value = RegisterResult(error = responseJson.message)
+                if (result.isSuccessful) {
+                    _otpReqResult.value =
+                        RegisterResult(success = LoggedInUserView(displayName = result.body()!!.message))
+                    forgotSessionManager.saveOtp(otp)
+                } else {
+                    val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
+                    _otpReqResult.value = RegisterResult(error = responseJson.message)
+                }
+            } catch (e:Exception){
+                _otpReqResult.value = RegisterResult(error = "Request Error")
             }
         }
     }
 
     fun submitPassword(password: String, confirmPassword: String) {
         viewModelScope.launch {
-            // can be launched in a separate asynchronous job
-            val email = forgotSessionManager.getEmail().toString()
-            val otp = forgotSessionManager.getOtp().toString()
-            val result = HttpApi.retrofitService.resetPassword(mapOf(
-                "email" to email,
-                "otp" to otp,
-                "password" to password,
-                "confirm_password" to confirmPassword
-            ))
+            try{
+                // can be launched in a separate asynchronous job
+                val email = forgotSessionManager.getEmail().toString()
+                val otp = forgotSessionManager.getOtp().toString()
+                val result = HttpApi.retrofitService.resetPassword(mapOf(
+                    "email" to email,
+                    "otp" to otp,
+                    "password" to password,
+                    "confirm_password" to confirmPassword
+                ))
 
-            if (result.isSuccessful) {
-                _otpReqResult.value =
-                    RegisterResult(success = LoggedInUserView(displayName = result.body()!!.message))
-                forgotSessionManager.clearSession()
-            } else {
-                val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
-                _otpReqResult.value = RegisterResult(error = responseJson.message)
+                if (result.isSuccessful) {
+                    _otpReqResult.value =
+                        RegisterResult(success = LoggedInUserView(displayName = result.body()!!.message))
+                    forgotSessionManager.clearSession()
+                } else {
+                    val responseJson: HttpResponse = Gson().fromJson(result.errorBody()!!.string(), HttpResponse::class.java)
+                    _otpReqResult.value = RegisterResult(error = responseJson.message)
+                }
+            } catch (e:Exception){
+                _otpReqResult.value = RegisterResult(error = "Request Error")
             }
         }
     }

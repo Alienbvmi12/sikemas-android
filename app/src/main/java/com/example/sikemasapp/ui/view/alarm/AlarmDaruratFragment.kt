@@ -14,7 +14,9 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmDaruratViewModel
+import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmViewModelFactory
 import com.example.sikemasapp.databinding.FragmentAlarmDaruratBinding
 import com.example.sikemasapp.ui.adapters.AlarmDaruratRecyclerViewAdapter
 import com.example.sikemasapp.ui.view._Maps.MapsActivity
@@ -27,7 +29,7 @@ import com.google.android.gms.location.LocationServices
 
 class AlarmDaruratFragment : Fragment() {
     private lateinit var binding: FragmentAlarmDaruratBinding
-    private val viewModel: AlarmDaruratViewModel by viewModels()
+    private lateinit var viewModel: AlarmDaruratViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var handler: Handler
@@ -41,6 +43,10 @@ class AlarmDaruratFragment : Fragment() {
     ): View? {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         binding = FragmentAlarmDaruratBinding.inflate(inflater, container, false)
+
+        viewModel = ViewModelProvider(this, AlarmViewModelFactory(requireContext()))
+            .get(AlarmDaruratViewModel::class.java)
+
         binding.alarmOptionRecyclerview.adapter = AlarmDaruratRecyclerViewAdapter(
             viewModel.itemList,
             requireContext()

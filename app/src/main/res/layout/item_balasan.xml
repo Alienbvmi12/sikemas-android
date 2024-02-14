@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="alamat"
-            type="com.example.sikemasapp.data.viewModel.alamat.AlamatItem" />
+            name="balasan"
+            type="com.example.sikemasapp.data.viewModel.balasan.BalasanItem" />
     </data>
 
     <LinearLayout
