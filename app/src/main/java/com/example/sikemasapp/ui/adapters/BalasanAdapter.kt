@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sikemasapp.data.viewModel.alamat.AlamatItem
 import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmDaruratViewModel
 import com.example.sikemasapp.data.viewModel.balasan.BalasanItem
+import com.example.sikemasapp.data.viewModel.balasan.BalasanViewModel
 import com.example.sikemasapp.databinding.ItemAlamatBinding
 import com.example.sikemasapp.databinding.ItemBalasanBinding
 import com.example.sikemasapp.ui.component.DoubleTapGestureListener
 
 class BalasanAdapter(
     private val context: Context,
-    private val viewModel: AlarmDaruratViewModel,
-    private val intent: Intent,
+    private val viewModel: BalasanViewModel,
     private val toast: (s: String) -> Any
 ): ListAdapter<BalasanItem, BalasanAdapter.MotorcyclesViewHolder>(DiffCallback) {
 
@@ -32,13 +32,10 @@ class BalasanAdapter(
         fun bind(
             member: BalasanItem,
             context: Context,
-            viewModel: AlarmDaruratViewModel,
-            intent: Intent,
+            viewModel: BalasanViewModel,
             toast: (s: String) -> Any
         ) {
             binding.balasan = member
-            var nama = ""
-            nama = member.name ?: "-"
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -79,6 +76,6 @@ class BalasanAdapter(
         holder.binding.root.setOnClickListener{
 
         }
-        holder.bind(motor, context, viewModel, intent, toast)
+        holder.bind(motor, context, viewModel, toast)
     }
 }

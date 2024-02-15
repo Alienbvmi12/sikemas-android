@@ -37,4 +37,8 @@
         android:id="@+id/teleponDaruratFragment"
         android:name="com.example.sikemasapp.ui.view.telepon_darurat.TeleponDaruratFragment"
         android:label="TeleponDaruratFragment" />
+    <fragment
+        android:id="@+id/balasanFragment"
+        android:name="com.example.sikemasapp.ui.view.alamat.BalasanFragment"
+        android:label="BalasanFragment" />
 </navigation>

@@ -40,6 +40,8 @@ import com.google.firebase.messaging.messaging
 import android.provider.Settings
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import coil.load
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -79,6 +81,14 @@ class MainActivity2 : AppCompatActivity() {
         profileInfoView.findViewById<ImageView>(R.id.profileImageView).setImageResource(R.drawable.nurse_pngrepo_com)
         profileInfoView.findViewById<TextView>(R.id.usernameTextView).text = viewModel.userData.getValue("username").toString()
         profileInfoView.findViewById<TextView>(R.id.roleTextView).text = viewModel.userData.getValue("email").toString()
+
+        val imgUrl = viewModel.userData.getValue("profile").toString()
+        val imgUri = imgUrl.toUri().buildUpon().scheme("http").build()
+
+        profileInfoView.findViewById<ImageView>(R.id.profileImageView).load(imgUri){
+            placeholder(R.drawable.loading_animation)
+            error(com.google.android.material.R.drawable.mtrl_ic_error)
+        }
 
         slidingPaneLayout.setPanelSlideListener(object : SlidingPaneLayout.PanelSlideListener {
             override fun onPanelSlide(panel: View, slideOffset: Float) {

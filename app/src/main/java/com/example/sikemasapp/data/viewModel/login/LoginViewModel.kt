@@ -46,7 +46,8 @@ class LoginViewModel(
                     userSessionManager.saveLoginInfo(
                         result.body()!!.data["id"].toString(),
                         result.body()!!.data["username"].toString(),
-                        result.body()!!.data["email"].toString()
+                        result.body()!!.data["email"].toString(),
+                        result.body()!!.data["profile"].toString()
                     )
                     userSessionManager.saveToken(result.body()!!.data["token"].toString())
                 } else {

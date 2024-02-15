@@ -14,7 +14,6 @@ class MainActivityViewModel(context: Context): ViewModel() {
         MainItem2("Telepon Darurat", R.drawable.telephone_call_1, R.id.teleponDaruratFragment),
         MainItem2("Kontak Pengaduan", R.drawable.report_1, R.id.kontakPengaduanFragment),
         MainItem2("Jadwal Ronda", R.drawable.schedule_1, R.id.rondaFragment),
-        MainItem2("Struktur Organigram", R.drawable.diagram_1, R.id.kontakPengaduanFragment),
-        MainItem2("Catatan Kejadian", R.drawable.file_1, R.id.kontakPengaduanFragment),
+        MainItem2("Balasan Pengaduan", R.drawable.file_1, R.id.balasanFragment),
     )
 }

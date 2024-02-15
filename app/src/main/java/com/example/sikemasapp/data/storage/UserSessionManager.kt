@@ -16,12 +16,18 @@ class UserSessionManager(context: Context) {
     }
 
     // Save other login info as needed
-    fun saveLoginInfo(id: String, username: String, email: String) {
+    fun saveLoginInfo(id: String, username: String, email: String, profile: String? = null) {
         sharedPreferences.edit()
             .putString("username", username)
             .putString("id", id)
             .putString("email", email)
             .apply()
+
+        if(profile != null){
+            sharedPreferences.edit()
+                .putString("profile", profile)
+                .apply()
+        }
     }
 
     // Retrieve token
@@ -34,7 +40,8 @@ class UserSessionManager(context: Context) {
         val username = sharedPreferences.getString("username", null)
         val email = sharedPreferences.getString("email", null)
         val id = sharedPreferences.getString("id", null)
-        return mapOf("username" to username, "email" to email, "id" to id)
+        val profile = sharedPreferences.getString("profile", null)
+        return mapOf("username" to username, "email" to email, "id" to id, "profile" to profile)
     }
 
     fun isLoginInfoExist(): Boolean {

@@ -1,7 +1,7 @@
 package com.example.sikemasapp.data.model.http
 
 import com.example.sikemasapp.data.viewModel.alamat.AlamatItem
-import com.example.sikemasapp.data.viewModel.alamat.BalasanItem
+import com.example.sikemasapp.data.viewModel.balasan.BalasanItem
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -12,7 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
-const val BASE_URL = "https://32bb-103-157-59-161.ngrok-free.app/sikemas-api-seme/"
+const val BASE_URL = "https://089e-103-165-227-178.ngrok-free.app/sikemas-api-seme/"
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
 

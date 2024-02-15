@@ -14,15 +14,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.sikemasapp.data.viewModel.alamat.AlamatViewModel
-import com.example.sikemasapp.data.viewModel.alamat.BalasanViewModel
 import com.example.sikemasapp.data.viewModel.alamat.BalasanViewModelFactory
 import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmDaruratViewModel
-import com.example.sikemasapp.databinding.FragmentAlamatBinding
+import com.example.sikemasapp.data.viewModel.balasan.BalasanViewModel
+import com.example.sikemasapp.databinding.FragmentBalasanBinding
 import com.example.sikemasapp.ui.adapters.AlamatAdapter
+import com.example.sikemasapp.ui.adapters.BalasanAdapter
 import com.example.sikemasapp.ui.component.BlackLoader
 
 class BalasanFragment : Fragment() {
-    private lateinit var binding: FragmentAlamatBinding
+    private lateinit var binding: FragmentBalasanBinding
     private lateinit var viewModel: BalasanViewModel
     private lateinit var loader: BlackLoader
 
@@ -34,15 +35,16 @@ class BalasanFragment : Fragment() {
         viewModel = ViewModelProvider(this, BalasanViewModelFactory(requireContext()))
             .get(BalasanViewModel::class.java)
         viewModel.init()
+        binding = FragmentBalasanBinding.inflate(layoutInflater)
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
-        binding = FragmentAlamatBinding.inflate(layoutInflater)
+        binding.viewModeru = viewModel
         return binding.root
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        binding.alamatGallery.adapter = AlamatAdapter(this, viewModelAlarm, intent
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.alamatGallery.adapter = BalasanAdapter(requireContext(), viewModel,
         ){ message ->
             toast(message)
         }
@@ -50,12 +52,13 @@ class BalasanFragment : Fragment() {
         loader = BlackLoader(layoutInflater, binding.groupLayout)
         loader.addLoader(binding.root)
 
-        viewModel.getAlamat(""){
+        viewModel.getBalasan{
             loader.hideLoader()
         }
+
         loader.showLoader()
 
-        viewModel.alamatRes.observe(this,
+        viewModel.alamatRes.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 loginResult ?: return@Observer
                 loginResult.error?.let {
@@ -65,30 +68,9 @@ class BalasanFragment : Fragment() {
 
                 }
             })
-
-        binding.search.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(s: Editable?) {
-                viewModel.getAlamat(binding.search.text.toString()){
-
-                }
-            }
-
-        })
-
-        binding.fab.setOnClickListener {
-            loader.showLoader()
-            viewModel.getAlamat(binding.search.text.toString()){
-                loader.hideLoader()
-            }
-        }
-
-        setContentView(binding.root)
     }
 
     private fun toast(string: String) {
-        Toast.makeText(this, string, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), string, Toast.LENGTH_LONG).show()
     }
 }

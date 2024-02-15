@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.sikemasapp.data.viewModel.alamat.AlamatViewModel
+import com.example.sikemasapp.data.viewModel.alamat.AlamatViewModelFactory
 import com.example.sikemasapp.data.viewModel.alamat.BalasanViewModelFactory
 import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmDaruratViewModel
 import com.example.sikemasapp.data.viewModel.alarmDarurat.AlarmViewModelFactory
@@ -22,7 +23,7 @@ class AlamatActivity : AppCompatActivity() {
     private lateinit var loader: BlackLoader
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, BalasanViewModelFactory(this))
+        viewModel = ViewModelProvider(this, AlamatViewModelFactory(this))
             .get(AlamatViewModel::class.java)
         viewModelAlarm = ViewModelProvider(this, AlarmViewModelFactory(this))
             .get(AlarmDaruratViewModel::class.java)

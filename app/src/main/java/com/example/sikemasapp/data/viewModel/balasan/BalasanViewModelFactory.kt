@@ -3,6 +3,7 @@ package com.example.sikemasapp.data.viewModel.alamat
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.sikemasapp.data.viewModel.balasan.BalasanViewModel
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

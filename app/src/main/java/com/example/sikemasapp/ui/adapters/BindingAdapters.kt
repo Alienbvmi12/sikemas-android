@@ -51,3 +51,22 @@ fun bindNama(txt: TextView, str: AlamatItem) {
         txt.text = "-"
     }
 }
+
+@BindingAdapter("setBalasanTitle")
+fun bindBalTit(txt: TextView, str: BalasanItem) {
+    txt.text = str.title
+}
+
+@BindingAdapter("setBalasanBody")
+fun bindBalBody(txt: TextView, str: BalasanItem) {
+    txt.text = str.body
+}
+@BindingAdapter("setBalasanNama")
+fun bindBalNama(txt: TextView, str: BalasanItem) {
+    txt.text = "Dari: " + str.name
+}
+
+@BindingAdapter("setBalasanEmail")
+fun bindBalEmail(txt: TextView, str: BalasanItem) {
+    txt.text = str.email
+}
