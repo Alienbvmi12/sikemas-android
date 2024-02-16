@@ -37,6 +37,11 @@ class AlamatActivity : AppCompatActivity() {
             toast(message)
         }
 
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = "Pilih Lokasi Kejadian"
+
         loader = BlackLoader(layoutInflater, binding.groupLayout)
         loader.addLoader(binding.root)
 
@@ -80,5 +85,9 @@ class AlamatActivity : AppCompatActivity() {
 
     private fun toast(string: String) {
         Toast.makeText(this, string, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

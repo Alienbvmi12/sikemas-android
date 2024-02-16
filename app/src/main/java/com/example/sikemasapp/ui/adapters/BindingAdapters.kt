@@ -54,19 +54,34 @@ fun bindNama(txt: TextView, str: AlamatItem) {
 
 @BindingAdapter("setBalasanTitle")
 fun bindBalTit(txt: TextView, str: BalasanItem) {
-    txt.text = str.title
+    txt.text = str.title ?: "Belum ada balasan"
 }
 
 @BindingAdapter("setBalasanBody")
 fun bindBalBody(txt: TextView, str: BalasanItem) {
-    txt.text = str.body
+    txt.text = str.body ?: "-"
+}
+
+@BindingAdapter("setBalasanTitle2")
+fun bindBalTit2(txt: TextView, str: BalasanItem) {
+    txt.text = str.aspirasiTitle
+}
+
+@BindingAdapter("setBalasanBody2")
+fun bindBalBody2(txt: TextView, str: BalasanItem) {
+    txt.text = str.aspirasiBody
+}
+
+@BindingAdapter("setBalasanTanggal")
+fun bindAsTag(txt: TextView, str: BalasanItem) {
+    txt.text = str.aspirasiTanggal
 }
 @BindingAdapter("setBalasanNama")
 fun bindBalNama(txt: TextView, str: BalasanItem) {
-    txt.text = "Dari: " + str.name
+    txt.text = "Dari: " + (str.name ?: "-")
 }
 
 @BindingAdapter("setBalasanEmail")
 fun bindBalEmail(txt: TextView, str: BalasanItem) {
-    txt.text = str.email
+    txt.text = (str.email ?: "-") + " - " + (str.balasanTanggal ?: "-")
 }

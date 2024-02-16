@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.sikemasapp.R
+import com.example.sikemasapp.data.model.http.BASE_URL
 import com.example.sikemasapp.databinding.ItemDaysBinding
 import com.example.sikemasapp.databinding.ItemMemberBinding
 import com.example.sikemasapp.ui.view.profile.ProfileActivity
@@ -33,7 +34,10 @@ class RondaDetailAdapter(val context: Context):
             }
             binding.memberName.text = member.getValue("nama").toString()
             binding.memberPhone.text = member.getValue("phone").toString()
-            val imgUrl = member.getValue("foto").toString()
+            var imgUrl = member.getValue("foto").toString()
+            if(!imgUrl.contains("http")){
+                imgUrl = BASE_URL + imgUrl
+            }
             val imgUri = imgUrl.toUri().buildUpon().scheme("http").build()
             binding.memberPhoto.load(imgUri) {
                 placeholder(R.drawable.loading_animation)

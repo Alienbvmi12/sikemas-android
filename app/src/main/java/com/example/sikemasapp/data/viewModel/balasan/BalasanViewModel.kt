@@ -55,9 +55,13 @@ class BalasanViewModel(context: Context): ViewModel() {
 }
 
 data class BalasanItem(
-    val id : String,
-    val title: String,
-    val body: String,
-    val name: String,
-    val email: String
+    @Json(name = "aspirasi_title") val aspirasiTitle: String,
+    @Json(name = "aspirasi_body") val aspirasiBody: String,
+    @Json(name = "aspirasi_tanggal") val aspirasiTanggal: String,
+    val id : String?,
+    val title: String?,
+    val body: String?,
+    @Json(name = "balasan_tanggal") val balasanTanggal: String?,
+    val name: String?,
+    val email: String?
 )

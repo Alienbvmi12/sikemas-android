@@ -12,7 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
-const val BASE_URL = "https://089e-103-165-227-178.ngrok-free.app/sikemas-api-seme/"
+const val BASE_URL = "https://af93-103-157-59-161.ngrok-free.app/sikemas-api-seme/"
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
 

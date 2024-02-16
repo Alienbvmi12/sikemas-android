@@ -79,21 +79,11 @@ class ProfileViewModel(
     fun setDisplayProfile(response: HttpResponse){
         val userData: MutableMap<String, Any> = response.data.toMutableMap()
         userData["alamat"] = userData.getValue("no_rumah").toString() + ", " +
-                "RT." + userData.getValue("rt").toString() + "/" +
-                "RW." + userData.getValue("rw").toString() + ", " +
-                userData.getValue("kelurahan").toString() + ", " +
-                "Kecamatan " + userData.getValue("kecamatan").toString() + ", " +
-                userData.getValue("kota").toString() + ", " +
-                userData.getValue("provinsi").toString() + ". " +
+                "RT." + userData.getValue("rt").toString() + ". " +
                 userData.getValue("kode_pos").toString() + " "
 
         userData.remove("no_rumah")
         userData.remove("rt")
-        userData.remove("rw")
-        userData.remove("kelurahan")
-        userData.remove("kecamatan")
-        userData.remove("kota")
-        userData.remove("provinsi")
         userData.remove("kode_pos")
         userData.remove("foto")
         userData.remove("id")

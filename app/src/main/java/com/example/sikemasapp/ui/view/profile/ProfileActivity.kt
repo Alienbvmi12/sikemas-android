@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.sikemasapp.AuthActivity
 import com.example.sikemasapp.R
+import com.example.sikemasapp.data.model.http.BASE_URL
 import com.example.sikemasapp.data.viewModel.profile.ProfileViewModel
 import com.example.sikemasapp.data.viewModel.profile.ProfileViewModelFactory
 import com.example.sikemasapp.databinding.FragmentProfileBinding
@@ -38,6 +39,11 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = "Profile"
+
 
         viewModel.userData.observe(this,
             Observer { loginResult ->
@@ -53,7 +59,10 @@ class ProfileActivity : AppCompatActivity() {
                     binding.profileUsername.text = it.data.getValue("username").toString()
                     binding.profileRole.text = "(" + it.data.getValue("posisi").toString() + ")"
 
-                    val imgUrl = it.data.getValue("foto").toString()
+                    var imgUrl = viewModel.userData.value?.success?.data?.getValue("foto").toString()
+                    if(!imgUrl.contains("http")){
+                        imgUrl = BASE_URL + imgUrl
+                    }
                     val imgUri = imgUrl.toUri().buildUpon().scheme("http").build()
                     binding.imageView5.load(imgUri) {
                         placeholder(R.drawable.loading_animation)
@@ -68,7 +77,13 @@ class ProfileActivity : AppCompatActivity() {
                     binding.viewModel = viewModel
 
                     binding.daysRecyclerView.adapter = ProfileDetailAdapter()
-                    binding.imageView9.load(viewModel.userData.value?.success?.data?.getValue("foto").toString()){
+
+                    var imgUrl = viewModel.userData.value?.success?.data?.getValue("foto").toString()
+                    if(!imgUrl.contains("http")){
+                        imgUrl = BASE_URL + imgUrl
+                    }
+                    val imgUri = imgUrl.toUri().buildUpon().scheme("http").build()
+                    binding.imageView9.load(imgUri){
                         placeholder(R.drawable.loading_animation)
                         error(com.google.android.material.R.drawable.mtrl_ic_error)
                     }
@@ -101,5 +116,9 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun toast(string: String) {
         Toast.makeText(this, string, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

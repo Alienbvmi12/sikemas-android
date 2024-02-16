@@ -42,6 +42,7 @@ import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import coil.load
+import com.example.sikemasapp.data.model.http.BASE_URL
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -82,8 +83,12 @@ class MainActivity2 : AppCompatActivity() {
         profileInfoView.findViewById<TextView>(R.id.usernameTextView).text = viewModel.userData.getValue("username").toString()
         profileInfoView.findViewById<TextView>(R.id.roleTextView).text = viewModel.userData.getValue("email").toString()
 
-        val imgUrl = viewModel.userData.getValue("profile").toString()
+        var imgUrl = viewModel.userData.getValue("profile").toString()
+        if(!imgUrl.contains("http")){
+            imgUrl = BASE_URL + imgUrl
+        }
         val imgUri = imgUrl.toUri().buildUpon().scheme("http").build()
+        Log.d("sok sok sok fprofil", imgUrl)
 
         profileInfoView.findViewById<ImageView>(R.id.profileImageView).load(imgUri){
             placeholder(R.drawable.loading_animation)
@@ -110,9 +115,9 @@ class MainActivity2 : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (isRightPaneOpened()) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        } else {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        } else {
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
         }
     }
 

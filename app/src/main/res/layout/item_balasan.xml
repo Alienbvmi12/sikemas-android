@@ -12,7 +12,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/menu_item"
+            tools:layout_editor_absoluteX="3dp"
+            tools:layout_editor_absoluteY="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/member_card_shape"
+            android:paddingHorizontal="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_judul_aspirasi"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:gravity="center_vertical"
+                android:text='Judul'
+                android:textAlignment="gravity"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:setBalasanTitle2="@{balasan}" />
+
+
+            <TextView
+                android:id="@+id/text_tanggal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="tanggal"
+                android:textSize="10sp"
+                android:textAlignment="textStart"
+                app:setBalasanTanggal="@{balasan}" />
+
+
+            <TextView
+                android:id="@+id/text_body_aspirasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="Lorem ip sum dolor sit amet lucus"
+                android:textAlignment="textStart"
+                app:setBalasanBody2="@{balasan}" />
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/menu_item_container"
             tools:layout_editor_absoluteX="3dp"

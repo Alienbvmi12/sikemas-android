@@ -166,30 +166,10 @@ class AlarmDaruratFragment : Fragment() {
     }
 
     private fun showOptionsDialog(event: String) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Dimana Lokasi Kejadiannya?")
-            .setItems(options) { _, which ->
-                // Handle the selected option
-                val selectedOption = options[which]
-                // Perform action based on the selected option
-                if(which === 0){
-                    // Check for location permission
-                    if (checkLocationPermission()) {
-                        // Permission is granted, get the current location
-                        getCurrentLocation()
-                    } else {
-                        // Request location permission
-                        requestLocationPermission()
-                    }
-                }
-                else{
-                    val intent = Intent(requireContext(), AlamatActivity::class.java)
-                    intent.putExtra("event", event)
-                    startActivity(intent)
-                }
-            }
-        val dialog = builder.create()
-        dialog.show()
+        // Perform action based on the selected option
+        val intent = Intent(requireContext(), AlamatActivity::class.java)
+        intent.putExtra("event", event)
+        startActivity(intent)
     }
     companion object {
         private const val REQUEST_LOCATION_PERMISSION = 1
