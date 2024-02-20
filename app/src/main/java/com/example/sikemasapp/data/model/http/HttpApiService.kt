@@ -1,5 +1,9 @@
 package com.example.sikemasapp.data.model.http
 
+import android.content.SharedPreferences
+import com.example.sikemasapp.LoadingScreenActivity
+import com.example.sikemasapp.MainActivity2
+import com.example.sikemasapp.data.storage.ApiSessionManager
 import com.example.sikemasapp.data.viewModel.alamat.AlamatItem
 import com.example.sikemasapp.data.viewModel.balasan.BalasanItem
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable
@@ -12,10 +16,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
-const val BASE_URL = "https://af93-103-157-59-161.ngrok-free.app/sikemas-api-seme/"
-private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
-
+var BASE_URL = "https://9c22-103-157-59-161.ngrok-free.app/sikemas-api-seme/"
+var moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+var retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
 interface HttpApiService{
 
     //Testing

@@ -16,18 +16,13 @@ class UserSessionManager(context: Context) {
     }
 
     // Save other login info as needed
-    fun saveLoginInfo(id: String, username: String, email: String, profile: String? = null) {
+    fun saveLoginInfo(id: String, username: String, email: String, profile: String) {
         sharedPreferences.edit()
             .putString("username", username)
             .putString("id", id)
             .putString("email", email)
+            .putString("profile", profile)
             .apply()
-
-        if(profile != null){
-            sharedPreferences.edit()
-                .putString("profile", profile)
-                .apply()
-        }
     }
 
     // Retrieve token

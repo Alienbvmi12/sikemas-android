@@ -14,6 +14,8 @@ class ForgotSessionManager(context: Context) {
         sharedPreferences.edit()
             .putString("email", email)
             .apply()
+
+
     }
 
     fun getOtp(): String? {

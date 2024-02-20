@@ -3,6 +3,8 @@ package com.example.sikemasapp.data.viewModel.main
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.sikemasapp.R
+import com.example.sikemasapp.data.model.http.BASE_URL
+import com.example.sikemasapp.data.storage.ApiSessionManager
 import com.example.sikemasapp.data.storage.UserSessionManager
 
 class MainActivityViewModel(context: Context): ViewModel() {

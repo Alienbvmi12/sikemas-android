@@ -11,8 +11,31 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorPrimary"
+        android:background="?attr/colorOnSecondary"
         tools:context=".ui.view.login.LoginFragment">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="320dp"
+            android:layout_height="326dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/security_shield_logo__1__1_removebg_preview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SIKEMAS"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="36dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -20,6 +43,7 @@
             android:layout_height="407dp"
             android:layout_weight="1.0"
             android:background="@drawable/rounded_top_corner_bg"
+            android:backgroundTint="?attr/colorSecondary"
             android:padding="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -98,15 +122,29 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
                 app:layout_constraintVertical_bias="0.692" />
 
-            <TextView
-                android:id="@+id/textView12"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="92dp"
-                android:layout_marginTop="10dp"
-                android:text="Belum punya akun? "
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login" />
+                app:layout_constraintTop_toBottomOf="@+id/login"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Belum punya akun? " />
+
+                <TextView
+                    android:id="@+id/register_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daftar"
+                    android:textColor="#1237BA" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/textView14"
@@ -117,18 +155,6 @@
                 android:text="Lupa Password? "
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
-
-            <TextView
-                android:id="@+id/register_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Daftar"
-                android:textColor="#1237BA"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView12"
-                app:layout_constraintTop_toBottomOf="@+id/login" />
 
             <TextView
                 android:id="@+id/lupa_password"
@@ -143,29 +169,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="305dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:src="@drawable/simple_security_shield_logo__3__removebg_preview_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SIKEMAS"
-            android:textColor="#F5F5F5"
-            android:textSize="36dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

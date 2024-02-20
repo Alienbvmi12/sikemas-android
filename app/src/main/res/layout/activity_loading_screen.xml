@@ -19,6 +19,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/simple_security_shield_logo__3__removebg_preview_1" />
+            app:srcCompat="@drawable/security_shield_logo__1__1_removebg_preview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

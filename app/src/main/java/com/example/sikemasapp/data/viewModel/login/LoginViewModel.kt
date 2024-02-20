@@ -1,22 +1,31 @@
 package com.example.sikemasapp.data.viewModel.login
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.example.sikemasapp.R
+import com.example.sikemasapp.data.model.http.BASE_URL
 import com.example.sikemasapp.data.model.http.HttpApi
 import com.example.sikemasapp.data.model.http.HttpApiService
+import com.example.sikemasapp.data.model.http.moshi
+import com.example.sikemasapp.data.model.http.retrofit
 import com.example.sikemasapp.data.model.login.LoggedInUser
 import com.example.sikemasapp.data.model.login.LoginRepository
 import com.example.sikemasapp.data.model.login.Result
+import com.example.sikemasapp.data.storage.ApiSessionManager
 import com.example.sikemasapp.data.storage.UserSessionManager
 import com.example.sikemasapp.ui.view.login.LoggedInUserView
 import com.example.sikemasapp.ui.view.login.LoginFormState
 import com.example.sikemasapp.ui.view.login.LoginResult
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
