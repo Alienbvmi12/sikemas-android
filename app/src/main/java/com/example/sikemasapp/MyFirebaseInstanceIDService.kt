@@ -4,23 +4,21 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.os.IBinder
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.provider.Settings
 import android.util.Log
 import android.widget.RemoteViews
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.example.sikemasapp.ui.view._Maps.MapsActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.google.firebase.messaging.RemoteMessage.Notification
+
 
 class MyFirebaseInstanceIDService : FirebaseMessagingService(){
     override fun onMessageReceived(message: RemoteMessage) {
@@ -33,9 +31,7 @@ class MyFirebaseInstanceIDService : FirebaseMessagingService(){
         createNotificationChannel()
 
         //Create intent
-        val intent = Intent(this, MapsActivity::class.java)
-        intent.putExtra("longitude", 1.13131334412)
-        intent.putExtra("latitude", -1.12342423877)
+        val intent = Intent(this, LoadingScreenActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
             0,
@@ -58,12 +54,21 @@ class MyFirebaseInstanceIDService : FirebaseMessagingService(){
             .setAutoCancel(true)
 
         //push notification
-        val manager: NotificationManagerCompat = NotificationManagerCompat.from(this)
+        val manager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if(!checkNotificationPermission()){
             requestNotificationPermission()
         }
         else{
             manager.notify(1123, builder.build())
+            val v = getSystemService(VIBRATOR_SERVICE) as Vibrator
+            // Vibrate for 500 milliseconds
+            // Vibrate for 500 milliseconds
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                v.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                //deprecated in API 26
+                v.vibrate(500)
+            }
         }
     }
 

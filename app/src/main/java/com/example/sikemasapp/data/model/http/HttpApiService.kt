@@ -16,9 +16,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
-var BASE_URL = "https://9c22-103-157-59-161.ngrok-free.app/sikemas-api-seme/"
-var moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-var retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
+const val BASE_URL = "https://guided-cow-diverse.ngrok-free.app/sikemas-api-seme/"
+private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
 interface HttpApiService{
 
     //Testing
