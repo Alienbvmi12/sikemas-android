@@ -11,8 +11,6 @@ import com.example.sikemasapp.R
 import com.example.sikemasapp.data.model.http.BASE_URL
 import com.example.sikemasapp.data.model.http.HttpApi
 import com.example.sikemasapp.data.model.http.HttpApiService
-import com.example.sikemasapp.data.model.http.moshi
-import com.example.sikemasapp.data.model.http.retrofit
 import com.example.sikemasapp.data.model.login.LoggedInUser
 import com.example.sikemasapp.data.model.login.LoginRepository
 import com.example.sikemasapp.data.model.login.Result
